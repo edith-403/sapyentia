@@ -1,0 +1,33 @@
+{
+  "name": "Sapyentia",
+  "version": "1.0.0",
+  "description": "SAPYENTIA es un repositorio web para tésis realizadas por alumnos de la Escuela Superior de Cómputo del Instituto Politécnico Nacional.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/edith-403/sapyentia.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/edith-403/sapyentia/issues"
+  },
+  "homepage": "https://github.com/edith-403/sapyentia#readme",
+  "dependencies": {
+    "bcrypt-nodejs": "0.0.3",
+    "connect-flash": "^0.1.1",
+    "ejs-mate": "^3.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.8",
+    "morgan": "^1.10.0",
+    "passport": "^0.5.0",
+    "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}
