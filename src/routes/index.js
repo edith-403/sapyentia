@@ -1,59 +1,47 @@
-const express = require('express')
-const router = express.Router();
+const router = require('express').Router();
+const passport = require('passport');
 
 router.get('/', (req, res, next) => {
-    res.send("Página inicial");
+  res.render('index');
 });
 
-router.get('/tesis', (req, res, next) => {
-    res.json(
-        [
-            { 
-                "Titulo": "Von Neumman Cellular Automatas",
-                "Autor": "Erick Vargas"
-            },
-            { 
-                "Titulo": "Algoritmos Genéticos para asignación de horarios",
-                "Autor": "Alan Rodríguez"
-            }
-        ]  
-    );
+router.get('/signup', (req, res, next) => {
+  res.render('signup');
 });
 
-router.post('/user/home', (req, res, next) => {
-    if (req.body.token) 
-    {
-        res.json({usuario: "Donaldo"});
-    } 
-    else
-    {
-        res.send("Token requerido");
-    }    
+router.post('/signup', passport.authenticate('local-signup', {
+  successRedirect: '/profile',
+  failureRedirect: '/signup',
+  failureFlash: true
+})); 
+
+router.get('/signin', (req, res, next) => {
+  res.render('signin');
 });
 
-router.post('/user/register', (req, res, next) => {
-    const data = req.body;
-    if ( data.nombre && data.password) 
-    {
-        res.send("Usuario registrado con éxito");
-    } 
-    else
-    {
-        res.send("Se requiere nombre y contraseña");
-    }
+
+router.post('/signin', passport.authenticate('local-signin', {
+  successRedirect: '/profile',
+  failureRedirect: '/signin',
+  failureFlash: true
+}));
+
+router.get('/profile',isAuthenticated, (req, res, next) => {
+  res.render('profile');
 });
 
-router.post('/tesis/register', (req, res, next) => {
-    const data = req.body;
-    const metadatos = data.metadatos;
-    if ( metadatos ) 
-    {
-        res.send("Datos registrados con éxito");
-    } 
-    else
-    {
-        res.send("Se necesitan los metadatos de la tésis");
-    }
+router.get('/logout', (req, res, next) => {
+  req.logout();
+  res.redirect('/');
 });
+
+
+function isAuthenticated(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  }
+
+  res.redirect('/')
+}
 
 module.exports = router;
