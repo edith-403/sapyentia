@@ -26,9 +26,18 @@ router.post('/signin', passport.authenticate('local-signin', {
   failureFlash: true
 }));
 
-router.get('/profile',isAuthenticated, (req, res, next) => {
+router.use((req, res, next) => {
+    isAuthenticated(req, res, next);
+    next();
+});
+
+router.get('/profile', (req, res, next) => {
   res.render('profile');
 });
+
+router.get('/dashboard', (req, res, next) => {
+    res.send('Dashboard');
+  });
 
 router.get('/logout', (req, res, next) => {
   req.logout();

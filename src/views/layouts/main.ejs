@@ -1,26 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Nodejs Passport Local</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://bootswatch.com/5/lux/bootstrap.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ" crossorigin="anonymous"></script>
+    <title>SAPYENTIA</title>
 </head>
 <body>
-  <!-- NAVIGATION -->
-  <% if (!user) { %>
-  <a href="/signin">Signin</a>
-  <a href="/signup">Signup</a>
-  <% } else { %>
-  <a href="/logout">Logout</a>
-  <a href="/profile">Profle</a>
-  <% } %>
+    
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">SAPYENTIA</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse ml-auto" id="navbarNav">
+            <ul class="navbar-nav">
+                <% if (user) { %>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/profile">Perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Salir</a>
+                    </li>
+                <% } else { %>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/signin">Inicia Sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/signup">Regístrate</a>
+                    </li>
+                <% } %>
+            </ul>
+          </div>
+        </div>
+      </nav>
 
-  <%if (signinMessage) {%>
-    <p><%= signinMessage %></p>
-  <% } %>
-  <%if (signupMessage) {%>
-    <p><%= signupMessage %></p>
-  <% } %>
+    <div class="container">
+        <%if (signinMessage.length > 0) {%>
+            <div class="alert alert-danger mt-4">
+                <%= signinMessage %>
+            </div>
+        <% } %>
+        <%if (signupMessage.length > 0) {%>
+            <div class="alert alert-danger mt-4">
+                <%= signupMessage %>
+            </div>
+        <% } %>
+    
+        <%- body %>
+    </div>
 
-  <%- body %>
 </body>
 </html>
