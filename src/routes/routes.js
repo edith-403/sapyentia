@@ -1,8 +1,34 @@
 const router = require('express').Router();
 const passport = require('passport');
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: './archivos_tesis',
+  filename: function (req, file, done) {
+    done('', file.originalname)
+  }
+});
+
+const upload = multer({
+  storage: storage,
+  failureRedirect: '/archivos_tesis'
+});
 
 router.get('/', (req, res, next) => {
   res.render('index');
+});
+
+router.get('/archivos_tesis', (req, res, next) => {
+  res.render('formulario_tesis');
+});
+
+router.post('/archivos_tesis', upload.single('archivo'), (req, res, next) => {
+  const file = req.file;
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400;
+    return next(error);
+  }
 });
 
 router.get('/signup', (req, res, next) => {

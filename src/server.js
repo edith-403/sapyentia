@@ -38,7 +38,7 @@ app.use((req, res, next) => {
 });
 
 // routes
-app.use('/', require('./routes/index'));
+app.use('/', require('./routes/routes'));
 
 // Starting the server
 app.listen(app.get('port'), () => {
