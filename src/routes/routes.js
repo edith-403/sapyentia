@@ -9,28 +9,6 @@ const storage = multer.diskStorage({
   }
 });
 
-const upload = multer({
-  storage: storage,
-  failureRedirect: '/archivos_tesis'
-});
-
-router.get('/', (req, res, next) => {
-  res.render('index');
-});
-
-router.get('/archivos_tesis', (req, res, next) => {
-  res.render('formulario_tesis');
-});
-
-router.post('/archivos_tesis', upload.single('archivo'), (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error('Please upload a file')
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-});
-
 router.get('/signup', (req, res, next) => {
   res.render('signup');
 });
@@ -68,6 +46,28 @@ router.get('/dashboard', (req, res, next) => {
 router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/');
+});
+
+const upload = multer({
+  storage: storage,
+  failureRedirect: '/archivos_tesis'
+});
+
+router.get('/', (req, res, next) => {
+  res.render('index');
+});
+
+router.get('/archivos_tesis', (req, res, next) => {
+  res.render('formulario_tesis');
+});
+
+router.post('/archivos_tesis', upload.single('archivo'), (req, res, next) => {
+  const file = req.file;
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400;
+    return next(error);
+  }
 });
 
 
