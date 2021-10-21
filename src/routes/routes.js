@@ -2,11 +2,8 @@ const router = require('express').Router();
 const passport = require('passport');
 const multer = require('multer');
 
-const storage = multer.diskStorage({
-  destination: './archivos_tesis',
-  filename: function (req, file, done) {
-    done('', file.originalname)
-  }
+router.get('/', (req, res, next) => {
+  res.render('index');
 });
 
 router.get('/signup', (req, res, next) => {
@@ -48,13 +45,15 @@ router.get('/logout', (req, res, next) => {
   res.redirect('/');
 });
 
-const upload = multer({
-  storage: storage,
-  failureRedirect: '/archivos_tesis'
+const storage = multer.diskStorage({
+  destination: './archivos_tesis',
+  filename: function (req, file, done) {
+    done('', file.originalname)
+  }
 });
 
-router.get('/', (req, res, next) => {
-  res.render('index');
+const upload = multer({
+  storage: storage
 });
 
 router.get('/archivos_tesis', (req, res, next) => {
