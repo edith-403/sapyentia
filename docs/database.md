@@ -1,5 +1,5 @@
 # Mongodb connection
-If authentication is needed the [mongoose](https://mongoosejs.com/docs/connections.html) connection in `database.js` file should look like:
+If authentication is needed the [mongoose](https://mongoosejs.com/docs/connections.html) connection in [database.js](../src/database.js) file should look like:
 ```js
 mongoose.connect(mongodb.URI, {
     "authSource": "admin",
