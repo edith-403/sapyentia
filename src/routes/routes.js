@@ -29,7 +29,7 @@ router.post('/signin', passport.authenticate('local-signin', {
 }));
 
 const storage = multer.diskStorage({
-  destination: './archivos_tesis',
+  destination: './propuestas',
   filename: function (req, file, done) {
     done('', file.originalname)
   }
@@ -39,11 +39,11 @@ const upload = multer({
   storage: storage
 });
 
-router.get('/archivos_tesis', (req, res, next) => {
+router.get('/propuestas', (req, res, next) => {
   res.render('formulario_tesis');
 });
 
-router.post('/archivos_tesis', upload.single('archivo'), async (req, res, next) => {
+router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
   const file = req.file;
   // Manejar el caso donde no se manda un archivo
   console.log("result")

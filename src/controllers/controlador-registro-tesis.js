@@ -29,7 +29,7 @@ module.exports.registrarTesis = async function registrarTesis(metadata)
     nuevaTesis.palabrasClave = palabrasClave;
     
     // Se guarda la ruta del archivo
-    nuevaTesis.ruta = "../archivos_tesis/" + metadata.numero + '.pdf';
+    nuevaTesis.ruta = "../propuestas/" + metadata.numero + '.pdf';
 
     const tesisGuardada = await nuevaTesis.save();
 
