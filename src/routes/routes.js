@@ -45,11 +45,14 @@ router.get('/propuestas', (req, res, next) => {
 
 router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
   const file = req.file;
-  // Manejar el caso donde no se manda un archivo
-  console.log("result")
   const result = await controladorRegistros.registrarTesis(req.body)
-  console.log(result)
-  res.sendStatus(200)
+  console.log("result: " + result)
+  if (result === false) {
+    res.send('<script>alert("La tesis ya existe"); window.location.href = "/propuestas"; </script>');
+  }
+  else {
+    res.send('<script>alert("Propuesta enviada correctamente"); window.location.href = "/"; </script>');
+  }
 });
 
 router.use((req, res, next) => {
