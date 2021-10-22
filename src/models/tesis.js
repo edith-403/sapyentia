@@ -7,7 +7,8 @@ const tesisSchema = new Schema({
     integrantes: [String],
     directores: [String],
     sinodales: [String],
-    palabrasClave: [String]
+    palabrasClave: [String],
+    ruta: String
 });
 
 module.exports = mongoose.model('archivo', tesisSchema);

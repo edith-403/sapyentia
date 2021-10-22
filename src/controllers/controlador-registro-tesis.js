@@ -23,9 +23,13 @@ module.exports.registrarTesis = async function registrarTesis(metadata)
     // Procesando los nombres de los sinodales
     let nombresSinodales = metadata.sinodales.split(',').map((item) => item.trim());
     nuevaTesis.sinodales = nombresSinodales;
+
+    // Procesando las palabras clave
+    let palabrasClave = metadata.palabrasClave.split(',').map((item) => item.trim());
+    nuevaTesis.palabrasClave = palabrasClave;
     
     // Se guarda la ruta del archivo
-    nuevaTesis.ruta = "" + metadata.numero + '.pdf';
+    nuevaTesis.ruta = "../archivos_tesis/" + metadata.numero + '.pdf';
 
     const tesisGuardada = await nuevaTesis.save();
 
