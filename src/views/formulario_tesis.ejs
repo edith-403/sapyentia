@@ -5,16 +5,20 @@
     <h5 class="card-title">Registro de tesis al repositorio</h5>
   </div>
   <div class="card-body">
-    <form action="/propuestas" method="post" enctype="multipart/form-data">
+    <form action="/propuestas" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
       <div class="form-group">
         <label for="inputIdentificador">Identificador/Número de Tesis</label>
         <input
           type="text"
-          class="form-control mt-"
+          class="form-control"
           id="inputIdentificador"
           placeholder="Ingrese el número o identificador de la tesis"
           name="numero"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputTitulo">Título</label>
@@ -24,7 +28,11 @@
           id="inputTitulo"
           placeholder="Ingrese el título de la tesis"
           name="titulo"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputEscuela">Escuela</label>
@@ -34,7 +42,11 @@
           id="inputEscuela"
           placeholder="Ingrese el nombre de la escuela"
           name="escuela"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputIntegrantes">Integrantes</label><br>
@@ -48,7 +60,11 @@
           id="inputIntegrantes"
           placeholder="Ingrese los nombres de los integrantes"
           name="integrantes"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputDirectores">Directores</label><br>
@@ -62,7 +78,11 @@
           id="inputDirectores"
           placeholder="Ingrese los nombre de los directores"
           name="directores"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputSinodales">Sinodales</label><br>
@@ -76,7 +96,11 @@
           id="inputSinodales"
           placeholder="Ingrese los nombre de los sinodales"
           name="sinodales"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="inputPalabrasClave">Palabras Clave</label><br>
@@ -90,7 +114,11 @@
           id="inputPalabrasClave"
           placeholder="Ingrese las palabras clave"
           name="palabrasClave"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <div class="form-group mt-4">
         <label for="Archivo">Archivo</label><br>
@@ -102,9 +130,36 @@
           class="form-control mt-1"
           id="inputArchivo"
           name="archivo"
+          required
         />
+        <div class="invalid-feedback">
+          Campo necesario
+        </div>
       </div>
       <button type="submit" class="btn btn-primary mt-4">Enviar</button>
     </form>
   </div>
 </div>
+
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
