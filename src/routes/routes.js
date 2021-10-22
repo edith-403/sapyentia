@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const multer = require('multer');
+const controladorRegistros = require('../controllers/controlador-registro-tesis.js')
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -27,6 +28,30 @@ router.post('/signin', passport.authenticate('local-signin', {
   failureFlash: true
 }));
 
+const storage = multer.diskStorage({
+  destination: './archivos_tesis',
+  filename: function (req, file, done) {
+    done('', file.originalname)
+  }
+});
+
+const upload = multer({
+  storage: storage
+});
+
+router.get('/archivos_tesis', (req, res, next) => {
+  res.render('formulario_tesis');
+});
+
+router.post('/archivos_tesis', upload.single('archivo'), async (req, res, next) => {
+  const file = req.file;
+  // Manejar el caso donde no se manda un archivo
+  console.log("result")
+  const result = await controladorRegistros.registrarTesis(req.body)
+  console.log(result)
+  res.sendStatus(200)
+});
+
 router.use((req, res, next) => {
     isAuthenticated(req, res, next);
     next();
@@ -44,31 +69,6 @@ router.get('/logout', (req, res, next) => {
   req.logout();
   res.redirect('/');
 });
-
-const storage = multer.diskStorage({
-  destination: './archivos_tesis',
-  filename: function (req, file, done) {
-    done('', file.originalname)
-  }
-});
-
-const upload = multer({
-  storage: storage
-});
-
-router.get('/archivos_tesis', (req, res, next) => {
-  res.render('formulario_tesis');
-});
-
-router.post('/archivos_tesis', upload.single('archivo'), (req, res, next) => {
-  const file = req.file;
-  if (!file) {
-    const error = new Error('Please upload a file')
-    error.httpStatusCode = 400;
-    return next(error);
-  }
-});
-
 
 function isAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {

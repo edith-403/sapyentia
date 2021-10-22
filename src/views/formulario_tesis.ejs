@@ -1,7 +1,110 @@
 <%- layout('layouts/main.ejs') %>
 
-<form action="/archivos_tesis" method="post" enctype="multipart/form-data">
-    <label for="archivo">Sube un archivo</label>
-    <input type="file" name="archivo" id="">
-    <input type="submit" value="Enviar">
-</form>
+<div class="card mt-4">
+  <div class="card-header">
+    <h5 class="card-title">Registro de tesis al repositorio</h5>
+  </div>
+  <div class="card-body">
+    <form action="/archivos_tesis" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <label for="inputIdentificador">Identificador/Número de Tesis</label>
+        <input
+          type="text"
+          class="form-control mt-"
+          id="inputIdentificador"
+          placeholder="Ingrese el número o identificador de la tesis"
+          name="numero"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputTitulo">Título</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputTitulo"
+          placeholder="Ingrese el título de la tesis"
+          name="titulo"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputEscuela">Escuela</label>
+        <input
+          type="text"
+          class="form-control"
+          id="inputEscuela"
+          placeholder="Ingrese el nombre de la escuela"
+          name="escuela"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputIntegrantes">Integrantes</label><br>
+        <small id="indicacionIntegrantes" class="form-text text-muted">
+            Escriba los nombres completos, comenzando por apellidos y separados por comas. Ej. 
+            Ayala Segoviano Donaldo, Mendoza Martínez Eduardo
+        </small>
+        <input
+          type="text"
+          class="form-control mt-1"
+          id="inputIntegrantes"
+          placeholder="Ingrese los nombres de los integrantes"
+          name="integrantes"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputDirectores">Directores</label><br>
+        <small id="indicacionDirectores" class="form-text text-muted">
+            Escriba los nombres completos, comenzando por apellidos y separados por comas. Ej. 
+            Martinez Agustín Jorge, Sanchez Valdez Verónica, ...
+        </small>
+        <input
+          type="text"
+          class="form-control mt-1"
+          id="inputDirectores"
+          placeholder="Ingrese los nombre de los directores"
+          name="directores"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputSinodales">Sinodales</label><br>
+        <small id="indicacionSinodales" class="form-text text-muted">
+            Escriba los nombres completos, comenzando por apellidos y separados por comas. Ej. 
+            Martinez Agustín Jorge, Sanchez Valdez Verónica, ...
+        </small>
+        <input
+          type="text"
+          class="form-control mt-1"
+          id="inputSinodales"
+          placeholder="Ingrese los nombre de los sinodales"
+          name="sinodales"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="inputPalabrasClave">Palabras Clave</label><br>
+        <small id="indicacionPalabrasClave" class="form-text text-muted">
+            Escriba las palabras clave, separadas por comas. Ej. Biología, Inteligencia Artificial, 
+            Redes Neuronales, ...
+        </small>
+        <input
+          type="text"
+          class="form-control mt-1"
+          id="inputPalabrasClave"
+          placeholder="Ingrese las palabras clave"
+          name="palabrasClave"
+        />
+      </div>
+      <div class="form-group mt-4">
+        <label for="Archivo">Archivo</label><br>
+        <small id="indicacionArchivo" class="form-text text-muted">
+            El archivo debe ser nombrado en el número de tesis. El formato debe ser PDF. Ej. 2021C-035.pdf
+        </small>
+        <input
+          type="file"
+          class="form-control mt-1"
+          id="inputArchivo"
+          name="archivo"
+        />
+      </div>
+      <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+    </form>
+  </div>
+</div>
