@@ -40,18 +40,17 @@ const upload = multer({
 });
 
 router.get('/propuestas', (req, res, next) => {
-  res.render('formulario_tesis');
+  res.render('formulario_tesis', {success: '', status: ''});
 });
 
 router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
-  const file = req.file;
-  const result = await controladorRegistros.registrarTesis(req.body)
-  console.log("result: " + result)
+  const result = await controladorRegistros.registrarTesis(req.body);
+  console.log("result: " + result);
   if (result === false) {
-    res.send('<script>alert("La tesis ya existe"); window.location.href = "/propuestas"; </script>');
+    res.render('formulario_tesis', {success: 'La tesis ya existe', status: 'danger'});
   }
   else {
-    res.send('<script>alert("Propuesta enviada correctamente"); window.location.href = "/"; </script>');
+    res.render('formulario_tesis', {success: 'Propuesta enviada correctamente', status: 'success'});
   }
 });
 

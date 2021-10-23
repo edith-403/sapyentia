@@ -1,5 +1,15 @@
 <%- layout('layouts/main.ejs') %>
 
+<% if (success != '') { %>
+<div class="container">
+  <div class="row">
+    <div class="alert alert-<%= status %>" role="alert">
+      <%= success %>
+    </div>
+  </div>
+</div>
+<% } %>
+
 <div class="card mt-4">
   <div class="card-header">
     <h5 class="card-title">Registro de tesis al repositorio</h5>
