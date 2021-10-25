@@ -1,7 +1,8 @@
 const router = require('express').Router();
 const passport = require('passport');
 const multer = require('multer');
-const controladorRegistros = require('../controllers/controlador-registro-tesis.js')
+const controladorRegistros = require('../controllers/controlador-registro-tesis')
+const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -27,6 +28,11 @@ router.post('/signin', passport.authenticate('local-signin', {
   failureRedirect: '/signin',
   failureFlash: true
 }));
+
+router.get('/tesis', async (req, res, next) => {
+  const results = await controladorConsultasTesis.procesarSolicitudTesis(req.body);
+  res.send(results);
+});
 
 const storage = multer.diskStorage({
   destination: './propuestas',
