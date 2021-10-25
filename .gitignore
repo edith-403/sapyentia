@@ -1,5 +1,6 @@
 /node_modules
 /propuestas
+/archivos_tesis
 *.jpg
 *.ini
 /bootstrap
