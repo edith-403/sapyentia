@@ -1,8 +1,8 @@
 const Tesis = require('../models/tesis');
 
-module.exports.registrarTesis = async function registrarTesis(metadata) 
+module.exports.registrarTesis = async function registrarTesis(metadata, nombreArchivo) 
 {
-    const tesisRegistrada = await Tesis.count({'titulo': metadata.titulo});
+    const tesisRegistrada = await Tesis.count({'numero': metadata.numero});
     if (tesisRegistrada) 
     {
         return false;
@@ -10,7 +10,7 @@ module.exports.registrarTesis = async function registrarTesis(metadata)
 
     const nuevaTesis = new Tesis();
     nuevaTesis.numero = metadata.numero;
-    nuevaTesis.titulo = metadata.titulo;
+    nuevaTesis.titulo = nombreArchivo;
 
     // Procesando los nombres de los integrantes
     let nombresIntegrantes = metadata.integrantes.split(',').map((item) => item.trim());

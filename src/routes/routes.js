@@ -50,8 +50,7 @@ router.get('/propuestas', (req, res, next) => {
 });
 
 router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
-  const result = await controladorRegistros.registrarTesis(req.body);
-  console.log("result: " + result);
+  const result = await controladorRegistros.registrarTesis(req.body, req.file.originalname);
   if (result === false) {
     res.render('formulario_tesis', {success: 'La tesis ya existe', status: 'danger'});
   }
