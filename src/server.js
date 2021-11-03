@@ -8,7 +8,6 @@ const morgan = require('morgan');
 
 // initializations
 const app = express();
-require('./database');
 require('./passport/local-auth');
 
 // settings
@@ -39,7 +38,7 @@ app.use((req, res, next) => {
 // routes
 app.use('/', require('./routes/routes'));
 
-// Starting the server
-app.listen(app.get('port'), () => {
-  console.log('server on port', app.get('port'));
-});
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+module.exports = app;
