@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
-const { mongodb } = require('./keys');
 
-mongoose.connect(mongodb.URI, {})
+const MONGODB_URI = process.env.MONGODB_URI;
+
+mongoose.connect(MONGODB_URI, {})
 .then(db => console.log('Database working'))
 .catch(err => console.error(err))
