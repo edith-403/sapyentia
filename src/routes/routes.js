@@ -4,6 +4,7 @@ const multer = require('multer');
 const controladorRegistros = require('../controllers/controlador-registro-tesis')
 const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
+const controladorUsuarios = require('../controllers/controlador-usuarios');
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -71,11 +72,13 @@ router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
 
 router.use((req, res, next) => {
     isAuthenticated(req, res, next);
-    next();
 });
 
-router.get('/profile', (req, res, next) => {
-  res.render('profile');
+router.get('/profile', async (req, res, next) => {
+  const idUsuario = req.session.passport.user;
+  const usuario = await controladorUsuarios.obtenerTipoUsuario(idUsuario);
+  const dataObject = {tipoUsuario: usuario.type};
+  res.render('profile', dataObject);
 });
 
 router.get('/dashboard', (req, res, next) => {
@@ -91,7 +94,6 @@ function isAuthenticated(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
   }
-
   res.redirect('/')
 }
 
