@@ -29,7 +29,7 @@
           </button>
           <div class="collapse navbar-collapse ml-auto" id="navbarNav">
             <ul class="navbar-nav">
-                <% if (user) { %>
+                <% if (typeof user !== 'undefined') { %>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/profile">Perfil</a>
                     </li>
@@ -44,9 +44,11 @@
                         <a class="nav-link" href="/signup">Regístrate</a>
                     </li>
                 <% } %>
-                <li class="nav-item">
-                    <a class="nav-link" href="/propuestas">Envio de propuestas de tesis</a>
-                </li>
+                <% if (typeof tipoUsuario !== 'undefined' && tipoUsuario === 'estudiante') { %>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="/propuestas">Envio de propuestas de tesis</a>
+                    </li>
+                <% } %>
             </ul>
           </div>
         </div>
@@ -72,9 +74,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-    <script src="javascript">
+    <script>
         $(document).ready(function() {
-            $('#example').DataTable();
+            $('#example')?.DataTable();
         } );
     </script>
 </body>
