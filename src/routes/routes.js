@@ -3,6 +3,7 @@ const passport = require('passport');
 const multer = require('multer');
 const controladorRegistros = require('../controllers/controlador-registro-tesis')
 const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
+const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -22,6 +23,14 @@ router.get('/signin', (req, res, next) => {
   res.render('signin');
 });
 
+router.get('/docente/historial', async (req, res, next) => {
+  res.render('tabla_historial');
+});
+
+router.get('/docente/historial/:id', async (req, res, next) => {
+  const result = await controladorConsultaHistorial.buscarTesisProfesor({numero: req.params.id});
+  res.send(result);
+});
 
 router.post('/signin', passport.authenticate('local-signin', {
   successRedirect: '/profile',
@@ -30,6 +39,7 @@ router.post('/signin', passport.authenticate('local-signin', {
 }));
 
 router.get('/tesis', async (req, res, next) => {
+  console.log(req.body)
   const results = await controladorConsultasTesis.procesarSolicitudTesis(req.body);
   res.send(results);
 });
