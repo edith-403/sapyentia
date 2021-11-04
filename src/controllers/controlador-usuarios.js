@@ -8,7 +8,8 @@ const obtenerTipoUsuario = async (id) => {
             "_id": new ObjectId(id)
         }
     );
-    return usuario;
+    const jsonUsuario = JSON.parse(JSON.stringify(usuario));
+    return jsonUsuario;
 }
 
 module.exports.obtenerTipoUsuario = obtenerTipoUsuario;

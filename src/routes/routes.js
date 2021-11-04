@@ -78,7 +78,8 @@ router.get('/profile', async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerTipoUsuario(idUsuario);
   const dataObject = {tipoUsuario: usuario.type};
-  res.render('profile', dataObject);
+  console.log(dataObject);
+  res.render('profile', {tipoUsuario: usuario.type});
 });
 
 router.get('/dashboard', (req, res, next) => {
