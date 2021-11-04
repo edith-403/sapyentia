@@ -4,19 +4,19 @@ const procesarSolicitudTesis = async (filtros) => {
     // Creando expresiones regulares para los integrantes
     const nombresIntegrantes = filtros.integrantes.split(',').map((item) => item.trim());
     const nombresIntegrantesRegExp = nombresIntegrantes.map((nombre) => {
-        if (nombre.length)    
+        if (nombre.length)
             return new RegExp(nombre, 'i')
     });
 
     // Creando expresiones regulares para los sinodales
     const nombresSinodales = filtros.sinodales.split(',').map((item) => item.trim());
     const nombresSinodalesRegExp = nombresSinodales.map((nombre) => {
-        if (nombre.length)    
+        if (nombre.length)
             return new RegExp(nombre, 'i')
     });
 
     // Creando expresiones regulares para los directores
-    const nombresDirectores = filtros.sinodales.split(',').map((item) => item.trim());
+    const nombresDirectores = filtros.directores.split(',').map((item) => item.trim());
     const nombresDirectoresRegExp = nombresDirectores.map((nombre) => {
         if (nombre.length)    
             return new RegExp(nombre, 'i')
@@ -40,7 +40,6 @@ const procesarSolicitudTesis = async (filtros) => {
             {"integrantes": { "$in": nombresIntegrantesRegExp }},
             {"sinodales": { "$in": nombresSinodalesRegExp }},
             {"directores": { "$in": nombresDirectoresRegExp }},
-            {"sinodales": { "$in": nombresSinodalesRegExp }},
             {"palabrasClave": { "$in": nombresPalabrasClaveRegExp }},
         ]}
     );
