@@ -77,8 +77,6 @@ router.use((req, res, next) => {
 router.get('/profile', async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerTipoUsuario(idUsuario);
-  const dataObject = {tipoUsuario: usuario.type};
-  console.log(dataObject);
   res.render('profile', {tipoUsuario: usuario.type});
 });
 
