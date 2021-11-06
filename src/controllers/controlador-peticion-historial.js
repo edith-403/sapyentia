@@ -1,6 +1,8 @@
 const controladorConsultasTesis = require('./controlador-peticion-tesis');
 
 const asignarValoresPorDefecto = (filtros) => {
+    if (!filtros.hasOwnProperty('numero'))
+        filtros.numero = "";
     if (!filtros.hasOwnProperty('integrantes'))
         filtros.integrantes = "";
     if (!filtros.hasOwnProperty('sinodales')) 
@@ -19,8 +21,7 @@ const asignarValoresPorDefecto = (filtros) => {
 const buscarTesisProfesor = async (informacion) => {
     filtros = asignarValoresPorDefecto(informacion);
     const result = await controladorConsultasTesis.procesarSolicitudTesis(filtros);
-    console.log(result);
-    return result.length > 0 ? result[0] : [];
+    return result;
 }
 
 module.exports.buscarTesisProfesor = buscarTesisProfesor;

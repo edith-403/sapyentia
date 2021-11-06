@@ -24,15 +24,6 @@ router.get('/signin', (req, res, next) => {
   res.render('signin');
 });
 
-router.get('/docente/historial', async (req, res, next) => {
-  res.render('tabla_historial');
-});
-
-router.get('/docente/historial/:id', async (req, res, next) => {
-  const result = await controladorConsultaHistorial.buscarTesisProfesor({numero: req.params.id});
-  res.send(result);
-});
-
 router.post('/signin', passport.authenticate('local-signin', {
   successRedirect: '/profile',
   failureRedirect: '/signin',
@@ -76,8 +67,26 @@ router.use((req, res, next) => {
 
 router.get('/profile', async (req, res, next) => {
   const idUsuario = req.session.passport.user;
-  const usuario = await controladorUsuarios.obtenerTipoUsuario(idUsuario);
+  const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
   res.render('profile', {tipoUsuario: usuario.type});
+});
+
+router.get('/docente/historial', async (req, res, next) => {
+  const idUsuario = req.session.passport.user;
+  const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
+  if (usuario.type === "docente") {
+    const tesisRelacionadas = await controladorConsultaHistorial.buscarTesisProfesor({
+      "directores": usuario.nombre.concat(' ', usuario.apellido_paterno).concat(' ', usuario.apellido_materno)
+    });
+    res.render('tabla_historial', {tesis: tesisRelacionadas});
+  } else {
+    res.redirect('/profile');
+  }
+});
+
+router.get('/docente/historial/:id', async (req, res, next) => {
+  const result = await controladorConsultaHistorial.buscarTesisProfesor({numero: req.params.id});
+  res.send(result[0]);
 });
 
 router.get('/dashboard', (req, res, next) => {

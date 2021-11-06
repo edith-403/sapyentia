@@ -143,20 +143,7 @@
 </div>
 
 <script>
-  var data = [
-    {
-      numero: "202135-A",
-      titulo: "Neural Networks in Animals Natural Language",
-      fecha: "2011/04/25",
-      rol: "Director",
-    },
-    {
-      numero: "202125-C",
-      titulo: "Videogames for stress reduction",
-      fecha: "2011/04/25",
-      rol: "Sinodal",
-    },
-  ];
+  var data = <%- JSON.stringify(tesis) %>;
 
   const mostrarInformacion = async (id) => {
     fetch("/docente/historial/".concat(id))
