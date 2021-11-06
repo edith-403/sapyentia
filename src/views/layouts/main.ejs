@@ -49,6 +49,11 @@
                         <a class="nav-link" href="/propuestas">Envio de propuestas de tesis</a>
                     </li>
                 <% } %>
+                <% if (typeof tipoUsuario !== 'undefined' && tipoUsuario === 'docente') { %>
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="/docente/historial">Historial</a>
+                    </li>
+                <% } %>
             </ul>
           </div>
         </div>
