@@ -89,6 +89,12 @@ router.get('/docente/historial/:id', async (req, res, next) => {
   res.send(result[0]);
 });
 
+router.get('/admin/propuestas', async (req, res, next) => {
+  const idUsuario = req.session.passport.user;
+  const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
+  res.render('./admin/propuestas_tesis', {tipoUsuario: usuario.type});
+});
+
 router.get('/dashboard', (req, res, next) => {
     res.send('Dashboard');
   });
