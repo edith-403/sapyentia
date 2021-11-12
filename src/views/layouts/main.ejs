@@ -29,7 +29,7 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse ml-auto" id="navbarNav">
+          <div class="collapse navbar-collapse ml-auto order-1" id="navbarNav">
             <ul class="navbar-nav">
                 <% if (typeof user !== 'undefined') { %>
                     <li class="nav-item">
@@ -61,13 +61,11 @@
             </ul>
           </div>
           <!-- Right aligned items -->
-          <div class="navbar-collapse collapse ml-auto order-3 dual-collapse2">
+          <div class="navbar-collapse collapse order-3" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <% if (typeof user !== 'undefined') { %>
                     <li class="nav-item">
-                        <center>
-                            <a class="nav-link" href="/logout"><i class="bi bi-door-closed-fill"></i><small>Salir</small></a>
-                        </center>
+                        <a class="nav-link" href="/logout"><i class="bi bi-door-closed-fill"></i><small>Salir</small></a>
                     </li>
                 <% } %>
             </ul>
