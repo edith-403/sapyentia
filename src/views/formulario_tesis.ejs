@@ -12,24 +12,10 @@
 
 <div class="card mt-4">
   <div class="card-header">
-    <h5 class="card-title">Registro de tesis al repositorio</h5>
+    <h5 class="card-title">Registro de propuestas de tesis. Protocolos.</h5>
   </div>
   <div class="card-body">
     <form action="/propuestas" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
-      <div class="form-group">
-        <label for="inputIdentificador">Identificador/Número de Tesis</label>
-        <input
-          type="text"
-          class="form-control"
-          id="inputIdentificador"
-          placeholder="Ingrese el número o identificador de la tesis"
-          name="numero"
-          required
-        />
-        <div class="invalid-feedback">
-          Campo necesario
-        </div>
-      </div>
       <div class="form-group mt-4">
         <label for="inputTitulo">Título</label>
         <input
@@ -79,33 +65,16 @@
       <div class="form-group mt-4">
         <label for="inputDirectores">Directores</label><br>
         <small id="indicacionDirectores" class="form-text text-muted">
-            Escriba los nombres completos, comenzando por apellidos y separados por comas. Ej. 
-            Martinez Agustín Jorge, Sanchez Valdez Verónica, ...
+            (Debes contar con los correos registrados en la plataforma de tus directores.)<br>
+            Escriba los correos completos, comenzando por apellidos y separados por comas. Ej. 
+            magusjor@gmail.com, sanchez.valvero@docente.ipn.mx, ...
         </small>
         <input
           type="text"
           class="form-control mt-1"
           id="inputDirectores"
-          placeholder="Ingrese los nombre de los directores"
+          placeholder="Ingrese los correos de los directores"
           name="directores"
-          required
-        />
-        <div class="invalid-feedback">
-          Campo necesario
-        </div>
-      </div>
-      <div class="form-group mt-4">
-        <label for="inputSinodales">Sinodales</label><br>
-        <small id="indicacionSinodales" class="form-text text-muted">
-            Escriba los nombres completos, comenzando por apellidos y separados por comas. Ej. 
-            Martinez Agustín Jorge, Sanchez Valdez Verónica, ...
-        </small>
-        <input
-          type="text"
-          class="form-control mt-1"
-          id="inputSinodales"
-          placeholder="Ingrese los nombre de los sinodales"
-          name="sinodales"
           required
         />
         <div class="invalid-feedback">
@@ -132,9 +101,6 @@
       </div>
       <div class="form-group mt-4">
         <label for="Archivo">Archivo</label><br>
-        <small id="indicacionArchivo" class="form-text text-muted">
-            El archivo debe ser nombrado en el número de tesis. El formato debe ser PDF. Ej. 2021C-035.pdf
-        </small>
         <input
           type="file"
           class="form-control mt-1"

@@ -5,6 +5,7 @@ const controladorRegistros = require('../controllers/controlador-registro-tesis'
 const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
 const controladorUsuarios = require('../controllers/controlador-usuarios');
+const uuid = require('uuid');
 
 router.get('/', (req, res, next) => {
   res.render('index');
@@ -52,7 +53,7 @@ router.get('/propuestas', (req, res, next) => {
 });
 
 router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
-  const result = await controladorRegistros.registrarTesis(req.body, req.file.originalname);
+  const result = await controladorRegistros.registrarPropuesta(req.body, req.file.originalname);
   if (result === false) {
     res.render('formulario_tesis', {success: 'La tesis ya existe', status: 'danger'});
   }
