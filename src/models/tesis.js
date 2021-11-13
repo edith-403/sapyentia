@@ -10,6 +10,8 @@ const tesisSchema = new Schema({
     palabrasClave: [String],
     ruta: String,
     escuela: String
+},{
+    timestamps: true,
 });
 
 module.exports = mongoose.model('archivo', tesisSchema);

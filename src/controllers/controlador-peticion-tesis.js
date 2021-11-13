@@ -42,7 +42,7 @@ const procesarSolicitudTesis = async (filtros) => {
             {"directores": { "$in": nombresDirectoresRegExp }},
             {"palabrasClave": { "$in": nombresPalabrasClaveRegExp }},
         ]}
-    );
+    ).lean();
     return results;
 }
 

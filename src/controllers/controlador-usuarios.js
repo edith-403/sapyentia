@@ -12,4 +12,14 @@ const obtenerUsuario = async (id) => {
     return jsonUsuario;
 }
 
-module.exports = {obtenerUsuario: obtenerUsuario};
+const obtenerUsuarioPorCorreo = async (email) => {
+    const usuario = await User.findOne(
+        {
+            "email": email
+        }
+    );
+    const jsonUsuario = JSON.parse(JSON.stringify(usuario));
+    return jsonUsuario;
+}
+
+module.exports = {obtenerUsuario, obtenerUsuarioPorCorreo};

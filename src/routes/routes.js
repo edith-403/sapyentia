@@ -32,7 +32,6 @@ router.post('/signin', passport.authenticate('local-signin', {
 }));
 
 router.get('/tesis', async (req, res, next) => {
-  console.log(req.body)
   const results = await controladorConsultasTesis.procesarSolicitudTesis(req.body);
   res.send(results);
 });
@@ -49,16 +48,16 @@ const upload = multer({
 });
 
 router.get('/propuestas', (req, res, next) => {
-  res.render('formulario_tesis', {success: '', status: ''});
+  res.render('formulario_propuesta', {success: '', status: ''});
 });
 
 router.post('/propuestas', upload.single('archivo'), async (req, res, next) => {
   const result = await controladorRegistros.registrarPropuesta(req.body, req.file.originalname);
   if (result === false) {
-    res.render('formulario_tesis', {success: 'La tesis ya existe', status: 'danger'});
+    res.render('formulario_propuesta', {success: 'La tesis ya existe', status: 'danger'});
   }
   else {
-    res.render('formulario_tesis', {success: 'Propuesta enviada correctamente', status: 'success'});
+    res.render('formulario_propuesta', {success: 'Propuesta enviada correctamente', status: 'success'});
   }
 });
 
@@ -72,22 +71,23 @@ router.get('/profile', async (req, res, next) => {
   res.render('profile', {tipoUsuario: usuario.type});
 });
 
+router.get('/docente/historial/:id', async (req, res, next) => {
+  const result = await controladorConsultaHistorial.buscarTesisProfesor({numero: req.params.id});
+  res.send(result[0]);
+});
+
 router.get('/docente/historial', async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
   if (usuario.type === "docente") {
     const tesisRelacionadas = await controladorConsultaHistorial.buscarTesisProfesor({
-      "directores": usuario.nombre.concat(' ', usuario.apellido_paterno).concat(' ', usuario.apellido_materno)
+      "directores": usuario.email,
+      "sinodales": usuario.email
     });
     res.render('tabla_historial', {tesis: tesisRelacionadas});
   } else {
     res.redirect('/profile');
   }
-});
-
-router.get('/docente/historial/:id', async (req, res, next) => {
-  const result = await controladorConsultaHistorial.buscarTesisProfesor({numero: req.params.id});
-  res.send(result[0]);
 });
 
 router.get('/admin/propuestas', async (req, res, next) => {
