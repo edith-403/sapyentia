@@ -44,7 +44,6 @@
               type="text"
               class="form-control"
               id="inputTitulo"
-              placeholder="Ingrese el título de la tesis"
               name="titulo"
               required
               readonly
@@ -57,7 +56,6 @@
               type="text"
               class="form-control"
               id="inputEscuela"
-              placeholder="Ingrese el nombre de la escuela"
               name="escuela"
               required
               readonly
@@ -69,7 +67,6 @@
               type="text"
               class="form-control mt-1"
               id="inputIntegrantes"
-              placeholder="Ingrese los nombres de los integrantes"
               name="integrantes"
               required
               readonly
@@ -93,7 +90,6 @@
               type="text"
               class="form-control mt-1"
               id="inputSinodales"
-              placeholder="Ingrese los nombre de los sinodales"
               name="sinodales"
               required
               readonly
@@ -105,20 +101,28 @@
               type="text"
               class="form-control mt-1"
               id="inputPalabrasClave"
-              placeholder="Ingrese las palabras clave"
               name="palabrasClave"
               required
               readonly
             />
           </div>
-          <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+          <div class="form-group mt-4">
+            <label for="inputFecha">Fecha de registro</label><br />
+            <input
+              type="text"
+              class="form-control mt-1"
+              id="inputFecha"
+              name="palabrasClave"
+              required
+              readonly
+            />
+          </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
   </div>
@@ -164,6 +168,8 @@
         inputPalabrasClave.value = data.palabrasClave.join(', ');
         const inputIntegrantes = document.getElementById('inputIntegrantes');
         inputIntegrantes.value = data.integrantes.join(', ');
+        const inputFecha = document.getElementById('inputFecha');
+        inputFecha.value = data.createdAt;
       });
   };
 
@@ -194,7 +200,7 @@
           },
         },
         {
-          data: "fecha",
+          data: "createdAt",
         },
         {
           data: "rol",
