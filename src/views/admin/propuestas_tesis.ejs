@@ -1,5 +1,20 @@
 <%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario}) %>
 
-<h1>To do</h1>
-<h4>Dashboard de todas las propuestas de tesis</h4>
-<h4>Se tendra que poder asignar un ID</h4>
+<h2 class="display-4">Propuestas de tesis con ID sin asignar</h2>
+
+<div class="container py-4">
+    <table
+        id="historial"
+        class="table table-striped table-bordered dt-responsive nowrap"
+        style="width: 100%"
+    >
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Alumnos</th>
+            <th>Fecha</th>
+            <th>Ver</th>
+        </tr>
+        </thead>
+    </table>
+</div>

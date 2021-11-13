@@ -54,8 +54,13 @@
                     </li>
                 <% } %>
                 <% if (typeof tipoUsuario !== 'undefined' && tipoUsuario === 'administrador') { %>
-                    <li class="nav-item"> 
-                        <a class="nav-link" href="/admin/propuestas">Propuestas de tesis</a>
+                    <li class="nav-item dropdown"> 
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"> <span class="nav-label">Tesis</span> <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a class="nav-link" href="/admin/propuestas">Propuestas de tesis</a></li>
+                            <li><a class="nav-link" href="/admin/propuestas">Tesis con IDs asignados</a></li>
+                            <li><a class="nav-link" href="/admin/propuestas">Todas las tesis</a></li>
+                        </ul>
                     </li>
                 <% } %>
             </ul>
@@ -93,6 +98,9 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
             $('#example')?.DataTable();
