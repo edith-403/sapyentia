@@ -55,7 +55,7 @@ const registrarPropuesta = async (metadata, nombreArchivo) =>
     let nombresIntegrantes = metadata.integrantes.split(',').map((item) => item.trim());
     nuevaTesis.integrantes = nombresIntegrantes;
 
-    nuevaTesis.sinodales = "";
+    nuevaTesis.sinodales = [];
 
     // Procesando los correos de los directores
     let correosDirectores = metadata.directores.split(',').map((item) => item.trim());
