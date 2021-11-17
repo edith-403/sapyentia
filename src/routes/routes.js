@@ -11,6 +11,15 @@ router.get('/', (req, res, next) => {
   res.render('index');
 });
 
+router.post('/tesis', async (req, res, next) => {
+  const resultados = await controladorConsultasTesis.procesarSolicitudTesis(req.body);
+  res.send(resultados);
+});
+
+router.get('/view/tesis', async (req, res, next) => {
+  res.render('consultas_tesis');
+});
+
 router.get('/signup', (req, res, next) => {
   res.render('signup');
 });
@@ -89,10 +98,6 @@ router.get('/docente/historial', async (req, res, next) => {
     res.redirect('/profile');
   }
 });
-
-router.get('/dashboard', (req, res, next) => {
-    res.send('Dashboard');
-  });
 
 router.get('/logout', (req, res, next) => {
   req.logout();
