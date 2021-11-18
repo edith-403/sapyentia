@@ -46,4 +46,7 @@ const procesarSolicitudTesis = async (filtros) => {
     return results;
 }
 
+const obtenerTesis = async () => {return await Tesis.find()}
+
 module.exports.procesarSolicitudTesis = procesarSolicitudTesis;
+module.exports.obtenerTesis = obtenerTesis;

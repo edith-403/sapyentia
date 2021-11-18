@@ -57,4 +57,20 @@ const buscarTesisProfesor = async (informacion) => {
     return tesisTerminadas;
 }
 
+const obtenerTesisSinID = async () => {
+    const result = await controladorConsultasTesis.obtenerTesis();
+    let tesisTerminadas = result.filter(tesis => tesis.numero.length == 0);
+    // cambiando fecha, desconozco porque no se pudo realizar con Promise, se termino solucionando creando otro objeto nuevo
+    tesisTerminadas = tesisTerminadas.map((tesis) => {
+        let obj = {};
+        obj._id = tesis._id;
+        obj.titulo = tesis.titulo;
+        obj.integrantes = tesis.integrantes;
+        obj.createdAt = tesis.createdAt.toISOString().slice(0, 10);
+        return obj;
+    });
+    return tesisTerminadas;
+}
+
 module.exports.buscarTesisProfesor = buscarTesisProfesor;
+module.exports.obtenerTesisSinID = obtenerTesisSinID;
