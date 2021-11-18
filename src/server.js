@@ -40,6 +40,7 @@ app.use((req, res, next) => {
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // routes
+app.use('/tests', require('./routes/tests'));
 app.use('/', require('./routes/routes'));
 app.use('/admin', require('./routes/admin'));
 
