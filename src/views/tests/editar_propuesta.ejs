@@ -1,4 +1,4 @@
-<%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario, tesisId: tesisId}) %>
+<%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario, tesis: tesis}) %>
 
 <div class="card mt-4">
     <div class="card-header">
@@ -87,6 +87,25 @@
           </div>
         </div>
         <div class="form-group mt-4">
+            <label for="inputSinodales">Sinodales</label><br>
+            <small id="indicacionSinodales" class="form-text text-muted">
+                (Debes contar con los correos registrados en la plataforma de tus sinodales.)<br>
+                Escriba los correos de los sinodales registrados en la plataforma separados por comas. Ej. 
+                magusjor@gmail.com, sanchez.valvero@docente.ipn.mx, ...
+            </small>
+            <input
+              type="text"
+              class="form-control mt-1"
+              id="inputSinodales"
+              placeholder="Ingrese los correos de los sinodales"
+              name="sinodales"
+              required
+            />
+            <div class="invalid-feedback">
+              Campo necesario
+            </div>
+          </div>
+        <div class="form-group mt-4">
           <label for="inputPalabrasClave">Palabras Clave</label><br>
           <small id="indicacionPalabrasClave" class="form-text text-muted">
               Escriba las palabras clave, separadas por comas. Ej. Biología, Inteligencia Artificial, 
@@ -117,15 +136,51 @@
             Campo necesario
           </div>
         </div>
-        <button type="submit" class="btn btn-primary mt-4">Enviar</button>
+        <button type="submit" class="btn btn-primary mt-4" id="btnSubmit">Guardar</button>
       </form>
     </div>
   </div>
 
   <script>
-      var idTesis = <%- tesisId %>;
+    var tesis = <%- JSON.stringify(tesis) %>;
 
-      $(document).ready(() => {
-          alert(idTesis);
-      });
+    $(document).ready(() => {
+        console.log(tesis);
+
+        colocarDatos();
+    });
+
+    function colocarDatos() {
+        $("#inputNumero").val(tesis.numero);
+        $("#inputTitulo").val(tesis.titulo);
+        $("#inputEscuela").val(tesis.escuela);
+        $("#inputIntegrantes").val(tesis.integrantes.join(','));
+        $("#inputDirectores").val(tesis.directores.join(','));
+        $("#inputSinodales").val(tesis.sinodales.join(','));
+        $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
+
+        if (!tesis.numero)
+            $("#btnSubmit").text("Guardar y notificar");
+    }
+
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function () {
+        'use strict'
+
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation')
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+        .forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+            if (!form.checkValidity()) {
+                event.preventDefault()
+                event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+            }, false)
+        })
+    })();
   </script>

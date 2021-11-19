@@ -19,9 +19,11 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id', async (req, res) => {
+    const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
+
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
     if (tesis) {
-        res.send('Redirecting to tesis edit...');
+        res.render('./tests/editar_propuesta', {tipoUsuario: usuario.type, tesis: tesis});
     } else {
         res.redirect('/tests');
     }
