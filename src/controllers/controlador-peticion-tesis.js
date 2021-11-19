@@ -48,5 +48,15 @@ const procesarSolicitudTesis = async (filtros) => {
 
 const obtenerTesis = async () => {return await Tesis.find()}
 
+const obtenerTesisId = async (id) => {
+    try {
+        return await Tesis.findById(id);   
+    } catch (error) {
+        console.log(error);
+        return null;
+    }
+}
+
 module.exports.procesarSolicitudTesis = procesarSolicitudTesis;
 module.exports.obtenerTesis = obtenerTesis;
+module.exports.obtenerTesisId = obtenerTesisId;

@@ -4,6 +4,7 @@ const router = express.Router();
 // controladores
 const controladorUsuarios = require('../controllers/controlador-usuarios');
 const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
+const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 
 // rutas
 router.get('/', async (req, res) => {
@@ -14,6 +15,15 @@ router.get('/', async (req, res) => {
         res.render('./tests/index', {tipoUsuario: usuario.type, tesis: tesis});
     } else {
         res.send('Error');
+    }
+});
+
+router.get('/:id', async (req, res) => {
+    const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
+    if (tesis) {
+        res.send('Redirecting to tesis edit...');
+    } else {
+        res.redirect('/tests');
     }
 });
 

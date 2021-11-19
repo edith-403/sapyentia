@@ -37,16 +37,29 @@
                 {
                     data: null,
                     render: function (data, type, row, meta) {
-                        return `
-                        <a 
-                        id="${data._id}" 
-                        onclick="alert('se mostrara la pantalla para editar ' + this.id)"
-                        class="btn btn-sm btn-success">
-                        <i class="fas fa-eye"></i>
-                        </a>`;
+                        return retornarBotonInicializado(data._id);
                     }
                 }
             ]
         });
+
+        function retornarBotonInicializado(id) {
+            btn = 
+            `
+            <a 
+            id="${id}" 
+            onclick="verSubmit(this.id)"
+            class="btn btn-sm btn-success">
+            <i class="fas fa-eye"></i>
+            </a>
+            `;
+            return btn;
+        }
+    }
+
+    function verSubmit(id) {
+        // alert('se mostrara la pantalla para editar ---- ' + id);
+        // var xhr = new XMLHttpRequest();
+        window.location.href = '/tests/'.concat(id);
     }
 </script>
