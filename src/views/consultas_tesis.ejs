@@ -380,7 +380,9 @@
 
   // Se obtiene la fecha del dia en el formato adecuado
   function getTodayDate() {
-    return new Date().toLocaleDateString("en-CA", {
+    let fechaActual = new Date();
+    fechaActual.setDate(fechaActual.getDate() + 1);
+    return fechaActual.toLocaleDateString("en-CA", {
       year: "numeric",
       month: "2-digit",
       day: "2-digit",

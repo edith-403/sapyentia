@@ -82,6 +82,10 @@ const procesarSolicitudTesis = async (filtros) => {
             {"sinodales": { "$in": nombresSinodalesRegExp }},
             {"directores": { "$in": nombresDirectoresRegExp }},
             {"palabrasClave": { "$in": nombresPalabrasClaveRegExp }},
+            {"createdOn": {
+                "$gt": new Date(filtros.fechaInicio),
+                "$lt": new Date(filtros.fechaFin)
+            }}
         ]}
     ).lean();
     return results;
