@@ -11,6 +11,7 @@ router.get("/", (req, res, next) => {
   res.render("index");
 });
 
+// Ruta para buscar tesis según los filtros enviados
 router.post("/tesis", async (req, res, next) => {
   const resultados = await controladorConsultasTesis.procesarSolicitudTesis(
     req.body

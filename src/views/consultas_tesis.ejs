@@ -296,15 +296,22 @@
 </div>
 
 <script>
+  // Configurando fechas por defecto de los campos
+  document.getElementById("filtroFechaInicio").defaultValue = "1900-01-01";
+  document.getElementById("filtroFechaFin").defaultValue = getTodayDate();
   const recolectarFiltros = () => {
     const filtroNumero = document.getElementById("filtroIdentificador").value;
     const filtroTitulo = document.getElementById("filtroTitulo").value;
     const filtroEscuela = document.getElementById("filtroEscuela").value;
     const filtroDirectores = document.getElementById("filtroDirectores").value;
     const filtroSinodales = document.getElementById("filtroSinodales").value;
-    const filtroPalabrasClave = document.getElementById("filtroPalabrasClave").value;
-    const filtroIntegrantes = document.getElementById("filtroIntegrantes").value;
-    const filtroFechaInicio = document.getElementById("filtroFechaInicio").value;
+    const filtroPalabrasClave = document.getElementById(
+      "filtroPalabrasClave"
+    ).value;
+    const filtroIntegrantes =
+      document.getElementById("filtroIntegrantes").value;
+    const filtroFechaInicio =
+      document.getElementById("filtroFechaInicio").value;
     const filtroFechaFin = document.getElementById("filtroFechaFin").value;
 
     return {
@@ -337,8 +344,8 @@
         table.rows().remove().draw(false);
         data.forEach((tesis) => {
           const date = new Date(tesis.createdAt);
-          tesis.createdAt = date.toISOString().slice(0,10);
-          table.row.add(tesis).draw( false );
+          tesis.createdAt = date.toISOString().slice(0, 10);
+          table.row.add(tesis).draw(false);
         });
       })
       .catch((error) => console.error("Error:", error))
@@ -371,7 +378,14 @@
       });
   };
 
-  //Despuesde cargada la pagina, se proceden a enlazar los elementos con jquery
+  // Se obtiene la fecha del dia en el formato adecuado
+  function getTodayDate() {
+    return new Date().toLocaleDateString("en-CA", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
+  }
 
   $(document).ready(function () {
     //Enlazando tabla con datos AJAX
