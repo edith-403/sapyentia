@@ -20,7 +20,6 @@ router.post("/tesis", async (req, res, next) => {
 });
 
 router.get("/tesis/:id", async (req, res, next) => {
-  console.log(controladorConsultasTesis)
   const result = await controladorConsultasTesis.obtenerInformacionTesis({
     numero: req.params.id,
   });

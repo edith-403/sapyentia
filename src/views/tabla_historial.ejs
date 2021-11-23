@@ -182,6 +182,10 @@
   $(document).ready(function () {
     //Enlazando tabla con datos AJAX
     var table = $("#historial").DataTable({
+      responsive: true,
+      "language": {
+        "emptyTable": "No hay resultados"
+      },
       scrollX: true,
       data: data,
       columns: [
