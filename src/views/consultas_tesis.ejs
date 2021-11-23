@@ -296,99 +296,99 @@
 </div>
 
 <script>
+  const recolectarFiltros = () => {
+    const filtroNumero = document.getElementById("filtroIdentificador").value;
+    const filtroTitulo = document.getElementById("filtroTitulo").value;
+    const filtroEscuela = document.getElementById("filtroEscuela").value;
+    const filtroDirectores = document.getElementById("filtroDirectores").value;
+    const filtroSinodales = document.getElementById("filtroSinodales").value;
+    const filtroPalabrasClave = document.getElementById("filtroPalabrasClave").value;
+    const filtroIntegrantes = document.getElementById("filtroIntegrantes").value;
+    const filtroFechaInicio = document.getElementById("filtroFechaInicio").value;
+    const filtroFechaFin = document.getElementById("filtroFechaFin").value;
 
-    const recolectarFiltros = () => {
-      const filtroNumero = document.getElementById("filtroIdentificador").value;
-      const filtroTitulo = document.getElementById("filtroTitulo").value;
-      const filtroEscuela = document.getElementById("filtroEscuela").value;
-      const filtroDirectores = document.getElementById("filtroDirectores").value;
-      const filtroSinodales = document.getElementById("filtroSinodales").value;
-      const filtroPalabrasClave = document.getElementById("filtroPalabrasClave").value;
-      const filtroIntegrantes = document.getElementById("filtroIntegrantes").value;
-      const filtroFechaInicio = document.getElementById("filtroFechaInicio").value;
-      const filtroFechaFin = document.getElementById("filtroFechaFin").value;
-
-      return {
-        numero: filtroNumero,
-        titulo: filtroTitulo,
-        escuela: filtroEscuela,
-        integrantes: filtroIntegrantes,
-        directores: filtroDirectores,
-        sinodales: filtroSinodales,
-        palabrasClave: filtroPalabrasClave,
-        integrantes: filtroIntegrantes,
-        fechaInicio: filtroFechaInicio,
-        fechaFin: filtroFechaFin,
-      };
+    return {
+      numero: filtroNumero,
+      titulo: filtroTitulo,
+      escuela: filtroEscuela,
+      integrantes: filtroIntegrantes,
+      directores: filtroDirectores,
+      sinodales: filtroSinodales,
+      palabrasClave: filtroPalabrasClave,
+      integrantes: filtroIntegrantes,
+      fechaInicio: filtroFechaInicio,
+      fechaFin: filtroFechaFin,
     };
+  };
 
-    const getInfo = () => {
-      var url = "/tesis";
-      var data = recolectarFiltros();
-      const table = $("#tesis").DataTable();
-      fetch(url, {
-        method: "POST", // or 'PUT'
-        body: JSON.stringify(data), // data can be `string` or {object}!
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-            table.rows().remove().draw(false);
-            data.forEach((tesis) => {
-              const date = new Date(tesis.createdAt);
-              tesis.createdAt = date.toISOString().slice(0,10);
-              table.row.add(tesis).draw( false );
-            });
-        })
-        .catch((error) => console.error("Error:", error))
-        .then((response) => console.log("Success:", response));
-    };
-
-    const mostrarInformacion = async (id) => {
-      fetch("/tesis/".concat(id))
-        .then((response) => response.json())
-        .then((data) => {
-          const inputNumero = document.getElementById("inputIdentificador");
-          inputNumero.value = data.numero;
-          const inputTitulo = document.getElementById("inputTitulo");
-          inputTitulo.value = data.titulo;
-          const inputEscuela = document.getElementById("inputEscuela");
-          inputEscuela.value = data.escuela;
-          const inputDirectores = document.getElementById("inputDirectores");
-          inputDirectores.value = data.directores.join(", ");
-          const inputSinodales = document.getElementById("inputSinodales");
-          inputSinodales.value = data.sinodales.join(", ");
-          const inputPalabrasClave =
-            document.getElementById("inputPalabrasClave");
-          inputPalabrasClave.value = data.palabrasClave.join(", ");
-          const inputIntegrantes = document.getElementById("inputIntegrantes");
-          inputIntegrantes.value = data.integrantes.join(", ");
-          const inputFecha = document.getElementById("inputFecha");
-          inputFecha.value = data.createdAt;
-          const linkDocumento = document.getElementById("linkDocumento");
-          linkDocumento.href = "/propuestas/" + data.ruta;
+  const getInfo = () => {
+    var url = "/tesis";
+    var data = recolectarFiltros();
+    const table = $("#tesis").DataTable();
+    fetch(url, {
+      method: "POST", // or 'PUT'
+      body: JSON.stringify(data), // data can be `string` or {object}!
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        table.rows().remove().draw(false);
+        data.forEach((tesis) => {
+          const date = new Date(tesis.createdAt);
+          tesis.createdAt = date.toISOString().slice(0,10);
+          table.row.add(tesis).draw( false );
         });
-    };
+      })
+      .catch((error) => console.error("Error:", error))
+      .then((response) => console.log("Success:", response));
+  };
 
-    //Despuesde cargada la pagina, se proceden a enlazar los elementos con jquery
+  const mostrarInformacion = async (id) => {
+    fetch("/tesis/".concat(id))
+      .then((response) => response.json())
+      .then((data) => {
+        const inputNumero = document.getElementById("inputIdentificador");
+        inputNumero.value = data.numero;
+        const inputTitulo = document.getElementById("inputTitulo");
+        inputTitulo.value = data.titulo;
+        const inputEscuela = document.getElementById("inputEscuela");
+        inputEscuela.value = data.escuela;
+        const inputDirectores = document.getElementById("inputDirectores");
+        inputDirectores.value = data.directores.join(", ");
+        const inputSinodales = document.getElementById("inputSinodales");
+        inputSinodales.value = data.sinodales.join(", ");
+        const inputPalabrasClave =
+          document.getElementById("inputPalabrasClave");
+        inputPalabrasClave.value = data.palabrasClave.join(", ");
+        const inputIntegrantes = document.getElementById("inputIntegrantes");
+        inputIntegrantes.value = data.integrantes.join(", ");
+        const inputFecha = document.getElementById("inputFecha");
+        inputFecha.value = data.createdAt;
+        const linkDocumento = document.getElementById("linkDocumento");
+        linkDocumento.href = "/propuestas/" + data.ruta;
+      });
+  };
 
-    $(document).ready(function () {
-      //Enlazando tabla con datos AJAX
-      var table = $("#tesis").DataTable({
-        data: [],
-        columns: [
-          {
-            data: "numero",
-          },
-          {
-            data: "titulo",
-          },
-          {
-            data: null,
-            render: function (data, type, row, meta) {
-              return `
+  //Despuesde cargada la pagina, se proceden a enlazar los elementos con jquery
+
+  $(document).ready(function () {
+    //Enlazando tabla con datos AJAX
+    var table = $("#tesis").DataTable({
+      scrollX: true,
+      data: [],
+      columns: [
+        {
+          data: "numero",
+        },
+        {
+          data: "titulo",
+        },
+        {
+          data: null,
+          render: function (data, type, row, meta) {
+            return `
                 <a
                   id="${data.numero}"
                   onclick="mostrarInformacion(this.id)"
@@ -397,15 +397,15 @@
                   class="btn btn-sm btn-success">
                   <i class="fas fa-eye"></i>
                 </a>`;
-            },
           },
-          {
-            data: "createdAt",
-          },
-          {
-            data: "palabrasClave",
-          },
-        ],
-      });
+        },
+        {
+          data: "createdAt",
+        },
+        {
+          data: "palabrasClave",
+        },
+      ],
     });
+  });
 </script>

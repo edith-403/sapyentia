@@ -182,6 +182,7 @@
   $(document).ready(function () {
     //Enlazando tabla con datos AJAX
     var table = $("#historial").DataTable({
+      scrollX: true,
       data: data,
       columns: [
         {
