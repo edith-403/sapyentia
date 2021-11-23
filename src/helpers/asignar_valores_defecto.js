@@ -13,6 +13,10 @@ const asignarValoresPorDefecto = (filtros) => {
         filtros.titulo = "";
     if (!filtros.hasOwnProperty('escuela')) 
         filtros.escuela = "";
+    if (!filtros.hasOwnProperty('fechaInicio')) 
+        filtros.fechaInicio = new Date();
+    if (!filtros.hasOwnProperty('fechaFin'))
+        filtros.fechaFin = new Date();
     return filtros;
 }
 
