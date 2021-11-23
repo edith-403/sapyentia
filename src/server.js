@@ -37,7 +37,7 @@ app.use((req, res, next) => {
 });
 
 // Static files
-app.use(express.static('public'));
+app.use('/propuestas', express.static(path.join(__dirname, 'propuestas')));
 
 // routes
 app.use('/tests', require('./routes/tests'));
