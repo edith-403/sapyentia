@@ -1,26 +1,9 @@
 const controladorConsultasTesis = require('./controlador-peticion-tesis');
 const controladorUsuarios = require('./controlador-usuarios')
-
-const asignarValoresPorDefecto = (filtros) => {
-    if (!filtros.hasOwnProperty('numero'))
-        filtros.numero = "";
-    if (!filtros.hasOwnProperty('integrantes'))
-        filtros.integrantes = "";
-    if (!filtros.hasOwnProperty('sinodales')) 
-        filtros.sinodales = "";
-    if (!filtros.hasOwnProperty('directores')) 
-        filtros.directores = "";
-    if (!filtros.hasOwnProperty('palabrasClave')) 
-        filtros.palabrasClave = "";
-    if (!filtros.hasOwnProperty('titulo')) 
-        filtros.titulo = "";
-    if (!filtros.hasOwnProperty('escuela')) 
-        filtros.escuela = "";
-    return filtros;
-}
+const asignarValoresDefecto = require('../helpers/asignar_valores_defecto');
 
 const buscarTesisProfesor = async (informacion) => {
-    filtros = asignarValoresPorDefecto(informacion);
+    filtros = asignarValoresDefecto.asignarValoresPorDefecto(informacion);
     const result = await controladorConsultasTesis.procesarSolicitudTesis(filtros);
     // Buscar solo tesis con número asignado
     let tesisTerminadas = result.filter(tesis => tesis.numero.length > 0);
