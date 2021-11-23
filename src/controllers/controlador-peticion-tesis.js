@@ -4,9 +4,7 @@ const controladorUsuarios = require('./controlador-usuarios')
 
 const obtenerInformacionTesis = async (informacion) => {
     filtros = asignarValoresDefecto.asignarValoresPorDefecto(informacion);
-    console.log(filtros)
     const result = await procesarSolicitudTesis(filtros);
-    console.log(result)
     // Buscar solo tesis con número asignado
     let tesisTerminadas = result.filter(tesis => tesis.numero.length > 0);
 
