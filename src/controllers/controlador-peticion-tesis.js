@@ -1,4 +1,45 @@
 const Tesis = require('../models/tesis');
+const asignarValoresDefecto = require('../helpers/asignar_valores_defecto')
+const controladorUsuarios = require('./controlador-usuarios')
+
+const obtenerInformacionTesis = async (informacion) => {
+    filtros = asignarValoresDefecto.asignarValoresPorDefecto(informacion);
+    const result = await procesarSolicitudTesis(filtros);
+    // Buscar solo tesis con número asignado
+    let tesisTerminadas = result.filter(tesis => tesis.numero.length > 0);
+
+    tesisTerminadas = await Promise.all(tesisTerminadas.map(
+        async function (tesis) {
+            // Cambiando correos por nombres
+            tesis.integrantes = await Promise.all( tesis.integrantes.map(
+                async (correo) => {
+                    const usuario = await controladorUsuarios.obtenerUsuarioPorCorreo(correo);
+                    if (usuario)
+                        return ' ' + [usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno].join(' ');
+                    return " Correo de usuario no encontrado"
+                }
+            ));
+            tesis.directores = await Promise.all( tesis.directores.map(
+                async (correo) => {
+                    const usuario = await controladorUsuarios.obtenerUsuarioPorCorreo(correo);
+                    return [usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno].join(' ');
+                }
+            ));
+            tesis.sinodales = await Promise.all(tesis.sinodales.map(
+                async (correo) => {
+                    const usuario = await controladorUsuarios.obtenerUsuarioPorCorreo(correo);
+                    return [usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno].join(' ');
+                }
+            ));
+            
+            // Formateando la fecha para solo mostrar año, mes y día
+            tesis.createdAt = tesis.createdAt.toISOString().slice(0, 10);
+
+            return tesis;
+        }
+    ));
+    return tesisTerminadas;
+}
 
 const procesarSolicitudTesis = async (filtros) => {
     // Creando expresiones regulares para los integrantes
@@ -57,6 +98,4 @@ const obtenerTesisId = async (id) => {
     }
 }
 
-module.exports.procesarSolicitudTesis = procesarSolicitudTesis;
-module.exports.obtenerTesis = obtenerTesis;
-module.exports.obtenerTesisId = obtenerTesisId;
+module.exports = {procesarSolicitudTesis, obtenerTesis, obtenerTesisId, obtenerInformacionTesis};
