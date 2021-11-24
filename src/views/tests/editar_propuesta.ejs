@@ -5,7 +5,7 @@
       <h5 class="card-title">Editar propuestas de tesis. Protocolos.</h5>
     </div>
     <div class="card-body">
-      <form action="/propuestas" method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+      <form action="/tests/<%- tesis.id %>/modificar" method="post" class="needs-validation" novalidate>
         <div class="form-group mt-4">
             <label for="inputNumero">ID</label>
             <input
@@ -153,9 +153,6 @@
         $("#inputSinodales").val(tesis.sinodales.join(','));
         $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
         $("#linkdoc").attr('href', '/propuestas/' + tesis.ruta);
-
-        // 1 TODO: colocar archivo
-        // 2 TODO: guardar info
 
         if (!tesis.numero)
             $("#btnSubmit").text("Guardar y notificar");
