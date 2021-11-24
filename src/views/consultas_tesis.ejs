@@ -379,7 +379,6 @@
     let textoReferencias = "";
 
     data.each(function (tesis, index) {
-        console.log(JSON.stringify(tesis))
         textoReferencias += `[${index}] ${tesis.integrantes}. (${tesis.titulo}). (${tesis.numero}) [Tesis para titulación como Ingeniero en Sistemas Computacionales, ${tesis.escuela}] Sapyentia.\n`;
     });
 
@@ -428,7 +427,6 @@
     fetch("/tesis/".concat(idTesis))
       .then((response) => response.json())
       .then((tesis) => {
-        console.log(tesis.numero)
         table.row.add(tesis).draw(false);
         elementosLista.add(tesis.numero)
       });
@@ -469,7 +467,6 @@
     fetch("/tesis/".concat(id))
       .then((response) => response.json())
       .then((data) => {
-        console.log(data)
         const inputNumero = document.getElementById("inputIdentificador");
         inputNumero.value = data.numero;
         const inputTitulo = document.getElementById("inputTitulo");
