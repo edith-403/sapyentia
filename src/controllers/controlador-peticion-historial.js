@@ -7,7 +7,6 @@ const buscarTesisProfesor = async (informacion) => {
     const result = await controladorConsultasTesis.procesarSolicitudTesis(filtros);
     // Buscar solo tesis con número asignado
     let tesisTerminadas = result.filter(tesis => tesis.numero.length > 0);
-    
     const correoProfesor = informacion.directores;
 
     tesisTerminadas = await Promise.all(tesisTerminadas.map(
@@ -19,6 +18,12 @@ const buscarTesisProfesor = async (informacion) => {
                 tesis.rol = "Sinodal";
             }
             // Cambiando correos por nombres
+            tesis.integrantes = await Promise.all( tesis.integrantes.map(
+                async (correo) => {
+                    const usuario = await controladorUsuarios.obtenerUsuarioPorCorreo(correo);
+                    return [usuario.nombre, usuario.apellido_paterno, usuario.apellido_materno].join(' ');
+                }
+            ));
             tesis.directores = await Promise.all( tesis.directores.map(
                 async (correo) => {
                     const usuario = await controladorUsuarios.obtenerUsuarioPorCorreo(correo);
