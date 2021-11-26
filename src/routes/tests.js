@@ -28,7 +28,7 @@ router.get('/:id', async (req, res) => {
 
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
     if (tesis) {
-        res.render('./tests/editar_propuesta', {tipoUsuario: usuario.type, tesis: tesis});
+        res.render('./tests/editar_propuesta', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: ""});
     } else {
         res.redirect('/tests');
     }
@@ -37,21 +37,23 @@ router.get('/:id', async (req, res) => {
 router.post('/:id/modificar', async (req, res) => {
     const result = await controladorModificarTesis.modificarTesisPorId(req.params.id, req.body);
     
-    if (result === true) {
-        params = {
-            success: "Propuesta modificada correctamente",
-            status: "success"
-        };
+    s = "undefined";
+    if (result[0] === true) {
+        s = "success";
     } else {
-        params = {
-            success: "No se pudo modificar la tesis",
-            status: "danger"
-        };
+        s = "danger";
     }
+
+    console.log(result);
 
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
-    res.render('./tests/editar_propuesta', {tipoUsuario: usuario.type, tesis: tesis});
+    res.render('./tests/editar_propuesta', {
+        tipoUsuario: usuario.type,
+        tesis: tesis,
+        success: result[1],
+        status: s
+    });
 });
 
 module.exports = router;

@@ -1,5 +1,19 @@
 <%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario, tesis: tesis}) %>
 
+<div class="container" style="margin-top: 2%;">
+  <a href="/tests" class="btn btn-light"><i class="bi bi-arrow-left"></i> Regresar</a>
+</div>
+
+<% if (success != '') { %>
+  <div class="container" style="margin-top: 2%;">
+    <div class="row">
+      <div class="alert alert-<%= status %>" role="alert">
+        <%= success %>
+      </div>
+    </div>
+  </div>
+  <% } %>
+
 <div class="card mt-4">
     <div class="card-header">
       <h5 class="card-title">Editar propuestas de tesis. Protocolos.</h5>
