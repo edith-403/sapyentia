@@ -151,25 +151,36 @@
 
   <script>
     var tesis = <%- JSON.stringify(tesis) %>;
+    var data = <%- JSON.stringify(data) %>;
 
     $(document).ready(() => {
-        console.log(tesis);
-
-        colocarDatos();
+        if (!tesis.numero)
+          $("#btnSubmit").text("Guardar y notificar");
+      
+        if (data) {
+          colocarDatos(data);
+          if ("<%= success %>" == "El ID ya existe dentro de la base de datos, favor de ingresar otro") {
+            $("#inputNumero").val("");
+            $("#inputNumero").focus();
+          }
+        } else {
+          colocarDatos(tesis);
+          $("#inputIntegrantes").val(tesis.integrantes.join(','));
+          $("#inputDirectores").val(tesis.directores.join(','));
+          $("#inputSinodales").val(tesis.sinodales.join(','));
+          $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
+        }
     });
 
-    function colocarDatos() {
-        $("#inputNumero").val(tesis.numero);
-        $("#inputTitulo").val(tesis.titulo);
-        $("#inputEscuela").val(tesis.escuela);
-        $("#inputIntegrantes").val(tesis.integrantes.join(','));
-        $("#inputDirectores").val(tesis.directores.join(','));
-        $("#inputSinodales").val(tesis.sinodales.join(','));
-        $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
-        $("#linkdoc").attr('href', '/propuestas/' + tesis.ruta);
-
-        if (!tesis.numero)
-            $("#btnSubmit").text("Guardar y notificar");
+    function colocarDatos(t) {
+        $("#inputNumero").val(t.numero);
+        $("#inputTitulo").val(t.titulo);
+        $("#inputEscuela").val(t.escuela);
+        $("#inputIntegrantes").val(t.integrantes);
+        $("#inputDirectores").val(t.directores);
+        $("#inputSinodales").val(t.sinodales);
+        $("#inputPalabrasClave").val(t.palabrasClave);
+        $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
     }
 
     // Example starter JavaScript for disabling form submissions if there are invalid fields

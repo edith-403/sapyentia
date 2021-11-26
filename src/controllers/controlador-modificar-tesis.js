@@ -39,7 +39,7 @@ const modificarTesisPorId = async (id, datos) => {
         }
     );
 
-    return [true, "asd"];
+    return [true, "Tesis modificada correctamente"];
 }
 
 module.exports = {modificarTesisPorId};
