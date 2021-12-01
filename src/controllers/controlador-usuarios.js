@@ -25,9 +25,11 @@ const obtenerUsuarioPorCorreo = async (email) => {
 const obtenerUsuarioPorNombre = async (nombre) => {
     const nombreRegex = new RegExp(nombre, 'i');
     const usuario = await User.find(
-        {
-            "nombre": nombreRegex
-        }
+        {"$or":[
+            {"nombre": nombreRegex},
+            {"apellido_paterno": nombreRegex},
+            {"apellido_materno": nombreRegex}
+        ]}
     );
 
     return usuario;
