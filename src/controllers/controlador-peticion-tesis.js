@@ -44,23 +44,55 @@ const obtenerInformacionTesis = async (informacion) => {
 const procesarSolicitudTesis = async (filtros) => {
     // Creando expresiones regulares para los integrantes
     const nombresIntegrantes = filtros.integrantes.split(',').map((item) => item.trim());
-    const nombresIntegrantesRegExp = nombresIntegrantes.map((nombre) => {
-        if (nombre.length)
-            return new RegExp(nombre, 'i')
+    
+    // Se buscan los correos de los nombres matcheados
+    const correosCoincidentes = (await Promise.all(nombresIntegrantes.flatMap(async (nombre) => {
+        if (nombre.length == 0) 
+            return "";
+        const usuarios = await controladorUsuarios.obtenerUsuarioPorNombre(nombre);
+        const usuariosEstudiantes = usuarios.filter(usuario => usuario.type === "estudiante")
+        const correos = usuariosEstudiantes.map((usuario) => {
+            return usuario.email;
+        });
+        return correos;
+    }))).flat();
+    const correosIntegrantesRegExp = correosCoincidentes.map( (correo) => {
+        if (correo.length)
+            return new RegExp(correo, 'i')
     });
 
     // Creando expresiones regulares para los sinodales
     const nombresSinodales = filtros.sinodales.split(',').map((item) => item.trim());
-    const nombresSinodalesRegExp = nombresSinodales.map((nombre) => {
-        if (nombre.length)
-            return new RegExp(nombre, 'i')
+    const correosSinodales = (await Promise.all(nombresSinodales.flatMap(async (nombre) => {
+        if (nombre.length == 0) 
+            return "";
+        const usuarios = await controladorUsuarios.obtenerUsuarioPorNombre(nombre);
+        const usuariosSinodales = usuarios.filter(usuario => usuario.type === "docente")
+        const correos = usuariosSinodales.map((usuario) => {
+            return usuario.email;
+        });
+        return correos;
+    }))).flat();
+    const correosSinodalesRegExp = correosSinodales.map((correo) => {
+        if (correo.length)
+            return new RegExp(correo, 'i')
     });
 
     // Creando expresiones regulares para los directores
     const nombresDirectores = filtros.directores.split(',').map((item) => item.trim());
-    const nombresDirectoresRegExp = nombresDirectores.map((nombre) => {
-        if (nombre.length)    
-            return new RegExp(nombre, 'i')
+    const correosDirectores = (await Promise.all(nombresDirectores.flatMap(async (nombre) => {
+        if (nombre.length == 0) 
+            return "";
+        const usuarios = await controladorUsuarios.obtenerUsuarioPorNombre(nombre);
+        const usuariosDirectores = usuarios.filter(usuario => usuario.type === "docente")
+        const correos = usuariosDirectores.map((usuario) => {
+            return usuario.email;
+        });
+        return correos;
+    }))).flat();
+    const correosDirectoresRegExp = correosDirectores.map((correo) => {
+        if (correo.length)
+            return new RegExp(correo, 'i')
     });
 
     // Creando expresiones regulares para las palabras clave
@@ -78,9 +110,9 @@ const procesarSolicitudTesis = async (filtros) => {
             {"numero": filtros.numero},
             {"titulo": titulo},
             {"escuela": escuela},
-            {"integrantes": { "$in": nombresIntegrantesRegExp }},
-            {"sinodales": { "$in": nombresSinodalesRegExp }},
-            {"directores": { "$in": nombresDirectoresRegExp }},
+            {"integrantes": { "$in": correosIntegrantesRegExp }},
+            {"sinodales": { "$in": correosSinodalesRegExp }},
+            {"directores": { "$in": correosDirectoresRegExp }},
             {"palabrasClave": { "$in": nombresPalabrasClaveRegExp }},
             {"createdAt": {
                 "$gt": new Date(filtros.fechaInicio),

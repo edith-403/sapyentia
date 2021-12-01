@@ -366,7 +366,7 @@
 
 <script>
   // Configurando fechas por defecto de los campos
-  document.getElementById("filtroFechaInicio").defaultValue = "1900-01-01";
+  document.getElementById("filtroFechaInicio").defaultValue = getTodayDate();
   document.getElementById("filtroFechaFin").defaultValue = getTodayDate();
 
   // Guardara los valores no repetidos de las tesis agregadas a la lista
@@ -492,7 +492,7 @@
   // Se obtiene la fecha del dia en el formato adecuado
   function getTodayDate() {
     let fechaActual = new Date();
-    fechaActual.setDate(fechaActual.getDate() + 1);
+    fechaActual.setDate(fechaActual.getDate());
     return fechaActual.toLocaleDateString("en-CA", {
       year: "numeric",
       month: "2-digit",
