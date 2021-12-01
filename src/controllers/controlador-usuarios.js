@@ -22,4 +22,15 @@ const obtenerUsuarioPorCorreo = async (email) => {
     return jsonUsuario;
 }
 
-module.exports = {obtenerUsuario, obtenerUsuarioPorCorreo};
+const obtenerUsuarioPorNombre = async (nombre) => {
+    const nombreRegex = new RegExp(nombre, 'i');
+    const usuario = await User.find(
+        {
+            "nombre": nombreRegex
+        }
+    );
+
+    return usuario;
+}
+
+module.exports = {obtenerUsuario, obtenerUsuarioPorCorreo, obtenerUsuarioPorNombre};
