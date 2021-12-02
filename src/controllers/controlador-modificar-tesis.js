@@ -32,9 +32,7 @@ const modificarTesisPorId = async (id, datos) => {
         (err) => {
             if (err) {
                 console.log(err);
-                return [false, "No se pudo actualizar en la base de datos, intentelo nuevamente"];
-            } else {
-                console.log("document upadted");
+                return [false, "No se pudo actualizar en la base de datos, intentelo nuevamente"]; // TODO: This return is never reached in global scope, resolve
             }
         }
     );
@@ -44,4 +42,15 @@ const modificarTesisPorId = async (id, datos) => {
     return [true, "Tesis modificada correctamente", mails];
 }
 
-module.exports = {modificarTesisPorId};
+const eliminarTesisPorId = async (id) => {
+    Tesis.findOneAndDelete({ _id: id }, (err) => {
+        if (err) {
+            console.error;
+            return false;
+        }
+    });
+
+    return true;
+}
+
+module.exports = {modificarTesisPorId, eliminarTesisPorId};

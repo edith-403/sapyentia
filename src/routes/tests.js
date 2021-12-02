@@ -93,4 +93,22 @@ router.post('/:id/editar', (req, res) => {
     res.send("Editando...");
 });
 
+router.get('/:id/delete', async (req, res) => {
+    const result = await controladorModificarTesis.eliminarTesisPorId(req.params.id);
+
+    if (result === false) {
+        const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
+        const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
+        res.render('./tests/editar', {
+            tipoUsuario: usuario.type,
+            tesis: tesis,
+            success: "No se pudo eliminar de la base de datos. Inténtelo más tarde nuevamente",
+            status: "danger",
+            data: null
+        });   
+    } else {
+        res.redirect('/tests');
+    }
+});
+
 module.exports = router;
