@@ -39,7 +39,9 @@ const modificarTesisPorId = async (id, datos) => {
         }
     );
 
-    return [true, "Tesis modificada correctamente"];
+    // returning all mails and removing duplicates
+    mails = [...new Set(integrantes.concat(directores).concat(sinodales))];
+    return [true, "Tesis modificada correctamente", mails];
 }
 
 module.exports = {modificarTesisPorId};
