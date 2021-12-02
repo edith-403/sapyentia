@@ -89,4 +89,8 @@ router.post('/:id/modificar', async (req, res) => {
     });
 });
 
+router.post('/:id/editar', (req, res) => {
+    res.send("Editando...");
+});
+
 module.exports = router;

@@ -19,7 +19,7 @@
       <h5 class="card-title">Editar propuestas de tesis. Protocolos.</h5>
     </div>
     <div class="card-body">
-      <form action="/tests/<%- tesis.id %>/modificar" method="post" class="needs-validation" novalidate>
+      <form action="/tests/<%- tesis.id %>/undefined" method="post" class="needs-validation" novalidate id="mainForm">
         <div class="form-group mt-4">
             <label for="inputNumero">ID</label>
             <input
@@ -154,8 +154,12 @@
     var data = <%- JSON.stringify(data) %>;
 
     $(document).ready(() => {
-        if (!tesis.numero)
+        if (!tesis.numero) {
           $("#btnSubmit").text("Guardar y notificar");
+          $("#mainForm").attr('action', '/tests/<%- tesis.id %>/modificar');
+        } else {
+          $("#mainForm").attr('action', '/tests/<%- tesis.id %>/editar');
+        }
       
         if (data) {
           colocarDatos(data);
