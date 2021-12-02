@@ -33,7 +33,7 @@ router.get('/', async (req, res) => {
     
     if (usuario.type === "administrador") {
         const tesis = await controladorConsultaHistorial.obtenerTesisSinID({});
-        res.render('./tests/index', {tipoUsuario: usuario.type, tesis: tesis});
+        res.render('./tests/tesis', {tipoUsuario: usuario.type, tesis: tesis});
     } else {
         res.send('Error');
     }
@@ -44,7 +44,7 @@ router.get('/:id', async (req, res) => {
 
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
     if (tesis) {
-        res.render('./tests/editar_propuesta', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: "", data: null});
+        res.render('./tests/editar', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: "", data: null});
     } else {
         res.redirect('/tests');
     }
@@ -80,7 +80,7 @@ router.post('/:id/modificar', async (req, res) => {
 
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
-    res.render('./tests/editar_propuesta', {
+    res.render('./tests/editar', {
         tipoUsuario: usuario.type,
         tesis: tesis,
         success: result[1],
