@@ -32,11 +32,17 @@ router.get('/', async (req, res) => {
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     
     if (usuario.type === "administrador") {
-        const tesis = await controladorConsultaHistorial.obtenerTesisSinID({});
+        // const tesis = await controladorConsultaHistorial.obtenerTesisSinID();
+        const tesis = await controladorConsultasTesis.obtenerTesis();
         res.render('./tests/tesis', {tipoUsuario: usuario.type, tesis: tesis});
     } else {
         res.send('Error');
     }
+});
+
+router.get('/crear_tesis', async (req, res) => {
+    const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
+    res.render('./tests/formulario_tesis', {tipoUsuario: usuario.type, tesis: null, success: "", status: "", data: null});
 });
 
 router.get('/:id', async (req, res) => {
@@ -44,7 +50,7 @@ router.get('/:id', async (req, res) => {
 
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
     if (tesis) {
-        res.render('./tests/editar', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: "", data: null});
+        res.render('./tests/formulario_tesis', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: "", data: null});
     } else {
         res.redirect('/tests');
     }
@@ -80,7 +86,7 @@ router.post('/:id/modificar', async (req, res) => {
 
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
-    res.render('./tests/editar', {
+    res.render('./tests/formulario_tesis', {
         tipoUsuario: usuario.type,
         tesis: tesis,
         success: result[1],
@@ -99,7 +105,7 @@ router.get('/:id/delete', async (req, res) => {
     if (result === false) {
         const tesis = await controladorConsultasTesis.obtenerTesisId(req.params.id);
         const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
-        res.render('./tests/editar', {
+        res.render('./tests/formulario_tesis', {
             tipoUsuario: usuario.type,
             tesis: tesis,
             success: "No se pudo eliminar de la base de datos. Inténtelo más tarde nuevamente",

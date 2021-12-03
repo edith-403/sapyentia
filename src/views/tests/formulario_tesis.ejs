@@ -2,7 +2,9 @@
 
 <div class="container" style="margin-top: 2%;">
   <a href="/tests" class="btn btn-light"><i class="bi bi-arrow-left"></i> Regresar</a>
+  <% if (tesis !== null) { %>
   <a href="/tests/<%- tesis.id %>/delete" class="btn btn-outline-danger float-end" id="delete"><i class="bi bi-trash-fill"></i>Eliminar</a>
+  <% } %>
 </div>
 
 <% if (success != '') { %>
@@ -17,10 +19,22 @@
 
 <div class="card mt-4">
     <div class="card-header">
-      <h5 class="card-title">Editar propuestas de tesis. Protocolos.</h5>
+      <h5 class="card-title">
+        <% if (tesis === null) { %>
+        Crear tesis
+        <% } else if (!tesis.numero) { %>
+        Editar propuestas de tesis - Protocolos
+        <% } else { %>
+        Editar tesis
+        <% } %>
+      </h5>
     </div>
     <div class="card-body">
-      <form action="/tests/<%- tesis.id %>/undefined" method="post" class="needs-validation" novalidate id="mainForm">
+      <% if (tesis !== null) { %>
+      <form action="/tests/<%- tesis.id %>/modificar" method="post" class="needs-validation" novalidate id="mainForm">
+      <% } else { %>
+      <form action="/tests/crear_tesis" method="post" class="needs-validation" novalidate id="mainForm">
+      <% } %>
         <div class="form-group mt-4">
             <label for="inputNumero">ID</label>
             <input
@@ -131,15 +145,31 @@
             Campo necesario
           </div>
         </div>
-        <div class="form-group mt-4 text-center">
-          <a 
-          id="linkdoc"
-          type="button" 
-          target="_blank"
-          href=""
-          class="btn btn-outline-secondary">
-            Ver documento completo
-          </a>
+        <div class="form-group mt-4">
+          <% if (tesis !== null) { %>
+          <div class="text-center">
+            <a 
+            id="linkdoc"
+            type="button" 
+            target="_blank"
+            href=""
+            class="btn btn-outline-secondary">
+              Ver documento completo
+            </a>
+          </div>
+          <% } else { %>
+          <label for="Archivo">Archivo</label><br>
+          <input
+            type="file"
+            class="form-control mt-1"
+            id="inputArchivo"
+            name="archivo"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+          <% } %>
         </div>
         <button type="submit" class="btn btn-primary mt-4" id="btnSubmit">Guardar</button>
       </form>
@@ -161,12 +191,9 @@
   }
 
   function intializeSaveButton() {
-    if (!tesis.numero) {
-        $("#btnSubmit").text("Guardar y notificar");
-        $("#mainForm").attr('action', '/tests/<%- tesis.id %>/modificar');
-      } else {
-        $("#mainForm").attr('action', '/tests/<%- tesis.id %>/editar');
-      }
+    if (tesis !== null && !tesis.numero) {
+      $("#btnSubmit").text("Guardar y notificar");
+    }
   }
 
   function intializeDeleteButton() {
@@ -190,7 +217,7 @@
         $("#inputNumero").val("");
         $("#inputNumero").focus();
       }
-    } else {
+    } else if (tesis !== null) {
       colocarDatos(tesis);
       $("#inputIntegrantes").val(tesis.integrantes.join(','));
       $("#inputDirectores").val(tesis.directores.join(','));
@@ -200,14 +227,14 @@
   }
 
   function colocarDatos(t) {
-      $("#inputNumero").val(t.numero);
-      $("#inputTitulo").val(t.titulo);
-      $("#inputEscuela").val(t.escuela);
-      $("#inputIntegrantes").val(t.integrantes);
-      $("#inputDirectores").val(t.directores);
-      $("#inputSinodales").val(t.sinodales);
-      $("#inputPalabrasClave").val(t.palabrasClave);
-      $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
+    $("#inputNumero").val(t.numero);
+    $("#inputTitulo").val(t.titulo);
+    $("#inputEscuela").val(t.escuela);
+    $("#inputIntegrantes").val(t.integrantes);
+    $("#inputDirectores").val(t.directores);
+    $("#inputSinodales").val(t.sinodales);
+    $("#inputPalabrasClave").val(t.palabrasClave);
+    $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
   }
 
   // Example starter JavaScript for disabling form submissions if there are invalid fields
