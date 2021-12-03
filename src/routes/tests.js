@@ -1,5 +1,6 @@
 const express = require('express');
 const nodemailer = require('nodemailer');
+const multer = require("multer");
 
 const router = express.Router();
 const transporter = nodemailer.createTransport({
@@ -25,6 +26,7 @@ const controladorUsuarios = require('../controllers/controlador-usuarios');
 const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
 const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 const controladorModificarTesis = require('../controllers/controlador-modificar-tesis');
+const controladorRegistros = require("../controllers/controlador-registro-tesis");
 
 // rutas
 
@@ -43,6 +45,42 @@ router.get('/', async (req, res) => {
 router.get('/crear_tesis', async (req, res) => {
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     res.render('./tests/formulario_tesis', {tipoUsuario: usuario.type, tesis: null, success: "", status: "", data: null});
+});
+
+const storage = multer.diskStorage({
+    destination: "./propuestas",
+    filename: function (req, file, done) {
+        done("", file.originalname);
+    },
+});
+
+const upload = multer({
+    storage: storage
+});
+
+router.post('/crear_tesis', upload.single("archivo"), async (req, res) => {
+    const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
+    const result = await controladorRegistros.registrarTesis(req.body, req.file.originalname);
+
+    if (result === true) {
+        res.render('./tests/formulario_tesis', {
+            tipoUsuario: usuario.type,
+            tesis: null,
+            success: 'Registro exitoso',
+            status: "success",
+            data: null
+            }
+        );
+    } else {
+        res.render('./tests/formulario_tesis', {
+            tipoUsuario: usuario.type,
+            tesis: null,
+            success: 'El ID ya existe dentro de la base de datos, favor de ingresar otro',
+            status: "danger",
+            data: req.body
+            }
+        );
+    }
 });
 
 router.get('/:id', async (req, res) => {
@@ -95,6 +133,7 @@ router.post('/:id/modificar', async (req, res) => {
     });
 });
 
+// Probablemente no se use
 router.post('/:id/editar', (req, res) => {
     res.send("Editando...");
 });

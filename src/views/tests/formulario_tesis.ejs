@@ -33,7 +33,7 @@
       <% if (tesis !== null) { %>
       <form action="/tests/<%- tesis.id %>/modificar" method="post" class="needs-validation" novalidate id="mainForm">
       <% } else { %>
-      <form action="/tests/crear_tesis" method="post" class="needs-validation" novalidate id="mainForm">
+      <form action="/tests/crear_tesis" method="post" enctype="multipart/form-data" class="needs-validation" novalidate id="mainForm">
       <% } %>
         <div class="form-group mt-4">
             <label for="inputNumero">ID</label>
