@@ -1,21 +1,19 @@
 const Tesis = require('../models/tesis');
 const fs = require('fs');
 const uuid = require('uuid');
-// const { promisify } = require('util');
-// const unlinkAsync = promisify(fs.unlink);
 
 const registrarTesis = async (metadata, nombreArchivo)  =>
 {
     if (metadata.numero) {
         const tesisRegistrada = await Tesis.count({'numero': metadata.numero});
         if (tesisRegistrada) {
-            // await unlinkSync('./propuestas/' + nombreArchivo);
+            // await unlinkSync('./public/propuestas/' + nombreArchivo);
             return false;
         }
     }
 
     const nuevoNombreArchivo = uuid.v4() + '.pdf';
-    fs.renameSync('./propuestas/' + nombreArchivo, './propuestas/' + nuevoNombreArchivo, (err) => {
+    fs.renameSync('./public/propuestas/' + nombreArchivo, './public/propuestas/' + nuevoNombreArchivo, (err) => {
         if (err) throw err;
     });
 
@@ -52,7 +50,7 @@ const registrarTesis = async (metadata, nombreArchivo)  =>
 const registrarPropuesta = async (metadata, nombreArchivo) => 
 {
     const nuevoNombreArchivo = uuid.v4() + '.pdf';
-    fs.renameSync('./propuestas/' + nombreArchivo, './propuestas/' + nuevoNombreArchivo, (err) => {
+    fs.renameSync('./public/propuestas/' + nombreArchivo, './public/propuestas/' + nuevoNombreArchivo, (err) => {
         if (err) throw err;
       });
 

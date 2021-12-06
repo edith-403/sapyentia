@@ -64,7 +64,7 @@ router.post(
 );
 
 const storage = multer.diskStorage({
-  destination: "./propuestas",
+  destination: "./public/propuestas",
   filename: function (req, file, done) {
     done("", file.originalname);
   },

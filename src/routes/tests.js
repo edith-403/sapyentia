@@ -48,7 +48,7 @@ router.get('/crear_tesis', async (req, res) => {
 });
 
 const storage = multer.diskStorage({
-    destination: "./propuestas",
+    destination: "./public/propuestas",
     filename: function (req, file, done) {
         done("", file.originalname);
     },
