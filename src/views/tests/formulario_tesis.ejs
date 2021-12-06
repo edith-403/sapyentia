@@ -36,15 +36,15 @@
       <form action="/tests/crear_tesis" method="post" enctype="multipart/form-data" class="needs-validation" novalidate id="mainForm">
       <% } %>
         <div class="form-group mt-4">
-            <label for="inputNumero">ID</label>
-            <input
-              type="text"
-              class="form-control"
-              id="inputNumero"
-              placeholder="Ingrese el ID de la tesis"
-              name="numero"
-            />
-          </div>
+          <label for="inputNumero">ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputNumero"
+            placeholder="Ingrese el ID de la tesis"
+            name="numero"
+          />
+        </div>
         <div class="form-group mt-4">
           <label for="inputTitulo">Título</label>
           <input
@@ -126,7 +126,7 @@
             <div class="invalid-feedback">
               Campo necesario
             </div>
-          </div>
+        </div>
         <div class="form-group mt-4">
           <label for="inputPalabrasClave">Palabras Clave</label><br>
           <small id="indicacionPalabrasClave" class="form-text text-muted">
@@ -170,6 +170,33 @@
             Campo necesario
           </div>
           <% } %>
+        </div>
+        <div class="form-group mt-4">
+          <div class="row">
+            <div class="col-sm-auto">
+              <label for="selectStatus">ID</label>
+              <select class="form-select" aria-label="Default select example" id="selectStatus">
+                <option value="1" selected>Aceptado</option>
+                <option value="0">Rechazado</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="inputMensaje">Mensaje</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputMensaje"
+                placeholder="Ingrese el mensaje a enviar por correo a los involucrados de la tesis"
+                name="mensaje"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" value="" id="checkMessage">
+          <label class="form-check-label" for="checkMessage">
+            ¿Enviar mensaje a involucrados?
+          </label>
         </div>
         <button type="submit" class="btn btn-primary mt-4" id="btnSubmit">Guardar</button>
       </form>
@@ -236,6 +263,14 @@
     $("#inputPalabrasClave").val(t.palabrasClave);
     $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
   }
+
+  $("#inputMensaje").on('input', () => {
+    if ($("#inputMensaje").val()) {
+      $("#checkMessage").prop('checked', true);
+    } else {
+      $("#checkMessage").prop('checked', false);
+    }
+  });
 
   // Example starter JavaScript for disabling form submissions if there are invalid fields
   (function () {
