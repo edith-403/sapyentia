@@ -16,7 +16,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
 // middleware
 router.use(express.urlencoded({extended: false}));
 router.use(express.json());
@@ -62,12 +61,27 @@ router.post('/crear_tesis', upload.single("archivo"), async (req, res) => {
     const usuario = await controladorUsuarios.obtenerUsuario("618eb2881f1522f958590f34");
     const result = await controladorRegistros.registrarTesis(req.body, req.file.originalname);
 
-    if (result === true) {
+    info = "Registro exitoso";
+    stat = "success"
+    if (result[0] === true) {
+        if (req.body.sendMessage) {
+            await sendMail(
+                result[1],
+                "Registro de tesis asignada",
+                "Se ha creado una nueva tesis con titulo '" + req.body.titulo + "' y se le ha asignado\n" + req.body.mensaje
+            ).then(() => {
+                info += " e involucrados notificados por correo electronico"
+            }).catch(() => {
+                console.error;
+                info = ", pero no se pudo notificar a los involucrados via correo";
+                stat = "warning";
+            });
+        }
         res.render('./tests/formulario_tesis', {
             tipoUsuario: usuario.type,
             tesis: null,
-            success: 'Registro exitoso',
-            status: "success",
+            success: info,
+            status: stat,
             data: null
             }
         );
@@ -94,15 +108,26 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-async function sendMail(mails, id, title) {
-    const info = await transporter.sendMail({
+async function sendMail(mails, subject, message) {
+    await transporter.sendMail({
         from: "'Repositorio de tesis' <sapyentia-no-reply@outlook.com>",
         to: mails,
-        subject: 'Propuesta de tesis con ID asignado',
-        text: 'La propuesta de tesis con titulo "' + title + '" ha sido asignada con el ID: ' + id
+        subject: subject,
+        text: message
     });
 }
 
+/**
+ * Type:
+ * · 1 - Crear tesis
+ * · 2 - Protocolo
+ * · 3 - Editar tesis
+ * 
+ * Status:
+ * · -1 - Indeterminado
+ * · 0 - Rechazado
+ * · 1 - Aceptado
+ */
 router.post('/:id/modificar', async (req, res) => {
     const result = await controladorModificarTesis.modificarTesisPorId(req.params.id, req.body);
     
@@ -110,13 +135,28 @@ router.post('/:id/modificar', async (req, res) => {
     data = null;
     if (result[0] === true) {
         s = "success";
-        result[1] += " e involucrados notificados via correo electronico"
 
-        await sendMail(result[2], req.body.numero, req.body.titulo).catch(() => {
-            console.error;
-            s = "warning";
-            result[1] = "Tesis modificada pero los involucrados no fueron notificados";
-        });
+        if (req.body.sendMessage || req.body.type == 2) {
+            result[1] += " e involucrados notificados via correo electronico";
+
+            mail = ["Tesis modificada", "La tesis con titulo '" + req.body.titulo + "' ha sido modificada"];
+            estatus = req.body.status == true ? 'Aceptada' : 'Rechazada';
+            estatus = req.body.status == -1 ? 'Sin status' : estatus;
+            if (req.body.type == 2) {
+                if (req.body.numero)
+                    mail = ["Propuesta de tesis con ID asignado", "La propuesta de tesis con titulo '" + req.body.titulo + "'  ha sido asignada con el ID: " + req.body.numero + "\nCon status: " + estatus];
+                else
+                    mail = ["Propuesta de tesis modificada", "La propuesta de tesis con titulo '" + req.body.titulo + "'  ha sido modificada\nCon status: " + estatus];
+            }
+            if (req.body.mensaje)
+                mail[1] += "\nY el administrador ha dejado el siguiente mensaje:\n" + req.body.mensaje;
+
+            await sendMail(result[2], mail[0], mail[1]).catch(() => {
+                console.error;
+                s = "warning";
+                result[1] = "Tesis modificada pero los involucrados no fueron notificados";
+            });
+        }
     } else {
         s = "danger";
         data = req.body;
@@ -131,11 +171,6 @@ router.post('/:id/modificar', async (req, res) => {
         status: s,
         data: data
     });
-});
-
-// Probablemente no se use
-router.post('/:id/editar', (req, res) => {
-    res.send("Editando...");
 });
 
 router.get('/:id/delete', async (req, res) => {

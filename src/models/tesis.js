@@ -9,7 +9,8 @@ const tesisSchema = new Schema({
     sinodales: [String],
     palabrasClave: [String],
     ruta: String,
-    escuela: String
+    escuela: String,
+    status: Number
 },{
     timestamps: true,
 });

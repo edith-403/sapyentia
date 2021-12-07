@@ -4,9 +4,12 @@ const modificarTesisPorId = async (id, datos) => {
     // se verifica primero si el ID no ha sido ya asignado a otra tesis
     var numero = datos.numero;
 
-    const result = await Tesis.find({ numero: numero });
-    if (result.length > 0) {
-        return [false, "El ID ya existe dentro de la base de datos, favor de ingresar otro"];
+    if (numero) {
+        const result = await Tesis.find({ numero: numero });
+        if (result.length > 0) {
+            if (result[0]._id != id)
+                return [false, "El ID ya existe dentro de la base de datos, favor de ingresar otro"];
+        }
     }
 
     var integrantes = datos.integrantes.split(',');
@@ -16,6 +19,7 @@ const modificarTesisPorId = async (id, datos) => {
     var titulo = datos.titulo;
     var escuela = datos.escuela;
     var updatedAt = new Date();
+    var status = datos.status;
 
     Tesis.updateOne(
         { _id: id },
@@ -27,7 +31,8 @@ const modificarTesisPorId = async (id, datos) => {
             palabrasClave: palabrasClave,
             titulo: titulo,
             escuela: escuela,
-            updatedAt: updatedAt
+            updatedAt: updatedAt,
+            status: status
         }},
         (err) => {
             if (err) {
@@ -38,7 +43,7 @@ const modificarTesisPorId = async (id, datos) => {
     );
 
     // returning all mails and removing duplicates
-    mails = [...new Set(integrantes.concat(directores).concat(sinodales))];
+    var mails = [...new Set(integrantes.concat(directores).concat(sinodales))];
     return [true, "Tesis modificada correctamente", mails];
 }
 

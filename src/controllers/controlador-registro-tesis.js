@@ -8,7 +8,7 @@ const registrarTesis = async (metadata, nombreArchivo)  =>
         const tesisRegistrada = await Tesis.count({'numero': metadata.numero});
         if (tesisRegistrada) {
             // await unlinkSync('./public/propuestas/' + nombreArchivo);
-            return false;
+            return [false];
         }
     }
 
@@ -41,9 +41,12 @@ const registrarTesis = async (metadata, nombreArchivo)  =>
     // Se guarda la ruta del archivo
     nuevaTesis.ruta = nuevoNombreArchivo;
 
+    nuevaTesis.status = metadata.status;
+
     await nuevaTesis.save();
 
-    return true;
+    var mails = [...new Set(nombresIntegrantes.concat(correosDirectores).concat(correosSinodales))];
+    return [true, mails];
     
 }
 

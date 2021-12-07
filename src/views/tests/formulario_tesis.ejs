@@ -8,14 +8,14 @@
 </div>
 
 <% if (success != '') { %>
-  <div class="container" style="margin-top: 2%;">
-    <div class="row">
-      <div class="alert alert-<%= status %>" role="alert">
-        <%= success %>
-      </div>
+<div class="container" style="margin-top: 2%;">
+  <div class="row">
+    <div class="alert alert-<%= status %>" role="alert">
+      <%= success %>
     </div>
   </div>
-  <% } %>
+</div>
+<% } %>
 
 <div class="card mt-4">
     <div class="card-header">
@@ -174,9 +174,10 @@
         <div class="form-group mt-4">
           <div class="row">
             <div class="col-sm-auto">
-              <label for="selectStatus">ID</label>
-              <select class="form-select" aria-label="Default select example" id="selectStatus">
-                <option value="1" selected>Aceptado</option>
+              <label for="selectStatus">Status</label>
+              <select class="form-select" aria-label="Default select example" id="selectStatus" name="status">
+                <option value="-1" selected>-</option>
+                <option value="1">Aceptado</option>
                 <option value="0">Rechazado</option>
               </select>
             </div>
@@ -193,12 +194,27 @@
           </div>
         </div>
         <div class="form-check mt-4">
-          <input class="form-check-input" type="checkbox" value="" id="checkMessage">
+          <input class="form-check-input" type="checkbox" value="1" id="checkMessage" name="sendMessage">
           <label class="form-check-label" for="checkMessage">
             ¿Enviar mensaje a involucrados?
           </label>
         </div>
         <button type="submit" class="btn btn-primary mt-4" id="btnSubmit">Guardar</button>
+
+        <!-- Input para saber que tipo de tesis se esta modificando -->
+        <input
+          type="text"
+          id="inputType"
+          name="type"
+          <% if (tesis === null) { %>
+          value="1"
+          <% } else if (!tesis.numero) { %>
+          value="2"
+          <% } else { %>
+          value="3"
+          <% } %>
+          hidden
+        >
       </form>
     </div>
 </div>
@@ -251,6 +267,11 @@
       $("#inputSinodales").val(tesis.sinodales.join(','));
       $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
     }
+    // checking
+    if ($("#inputType").val() == 2) {
+      $("#checkMessage").attr('disabled', true);
+      $("#checkMessage").prop('checked', true);
+    }
   }
 
   function colocarDatos(t) {
@@ -262,12 +283,20 @@
     $("#inputSinodales").val(t.sinodales);
     $("#inputPalabrasClave").val(t.palabrasClave);
     $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
+    if (typeof t.status !== "undefined") {
+      $("#selectStatus").val(t.status);
+    } else {
+      console.log("no status");
+      $("#selectStatus").val('-1');
+    }
+    $("#selectStatus").change();
+    $("#inputMensaje").val(t.mensaje); // TODO: probablemente pueda haber error
   }
 
   $("#inputMensaje").on('input', () => {
     if ($("#inputMensaje").val()) {
       $("#checkMessage").prop('checked', true);
-    } else {
+    } else if ($("#inputType").val() != 2) {
       $("#checkMessage").prop('checked', false);
     }
   });
