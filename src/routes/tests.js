@@ -22,7 +22,6 @@ router.use(express.json());
 
 // controladores
 const controladorUsuarios = require('../controllers/controlador-usuarios');
-const controladorConsultaHistorial = require('../controllers/controlador-peticion-historial');
 const controladorConsultasTesis = require('../controllers/controlador-peticion-tesis');
 const controladorModificarTesis = require('../controllers/controlador-modificar-tesis');
 const controladorRegistros = require("../controllers/controlador-registro-tesis");
@@ -122,11 +121,6 @@ async function sendMail(mails, subject, message) {
  * · 1 - Crear tesis
  * · 2 - Protocolo
  * · 3 - Editar tesis
- * 
- * Status:
- * · -1 - Indeterminado
- * · 0 - Rechazado
- * · 1 - Aceptado
  */
 router.post('/:id/modificar', async (req, res) => {
     const result = await controladorModificarTesis.modificarTesisPorId(req.params.id, req.body);
