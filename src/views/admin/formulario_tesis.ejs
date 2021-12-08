@@ -1,0 +1,325 @@
+<%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario, tesis: tesis}) %>
+
+<div class="container" style="margin-top: 2%;">
+  <!-- TODO: Direccion dinamica -->
+  <a href="/admin/propuestas" class="btn btn-light"><i class="bi bi-arrow-left"></i> Regresar</a>
+  <% if (tesis !== null) { %>
+  <a href="/admin/<%- tesis.id %>/delete" class="btn btn-outline-danger float-end" id="delete"><i class="bi bi-trash-fill"></i>Eliminar</a>
+  <% } %>
+</div>
+
+<% if (success != '') { %>
+<div class="container" style="margin-top: 2%;">
+  <div class="row">
+    <div class="alert alert-<%= status %>" role="alert">
+      <%= success %>
+    </div>
+  </div>
+</div>
+<% } %>
+
+<div class="card mt-4">
+    <div class="card-header">
+      <h5 class="card-title">
+        <% if (tesis === null) { %>
+        Crear tesis
+        <% } else if (!tesis.numero) { %>
+        Editar propuestas de tesis - Protocolos
+        <% } else { %>
+        Editar tesis
+        <% } %>
+      </h5>
+    </div>
+    <div class="card-body">
+      <% if (tesis !== null) { %>
+      <form action="/admin/<%- tesis.id %>/modificar" method="post" class="needs-validation" novalidate id="mainForm">
+      <% } else { %>
+      <form action="/admin/crear_tesis" method="post" enctype="multipart/form-data" class="needs-validation" novalidate id="mainForm">
+      <% } %>
+        <div class="form-group mt-4">
+          <label for="inputNumero">ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputNumero"
+            placeholder="Ingrese el ID de la tesis"
+            name="numero"
+          />
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputTitulo">Título</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputTitulo"
+            placeholder="Ingrese el título de la tesis"
+            name="titulo"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputEscuela">Escuela</label>
+          <input
+            type="text"
+            class="form-control"
+            id="inputEscuela"
+            placeholder="Ingrese el nombre de la escuela"
+            name="escuela"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputIntegrantes">Integrantes</label><br>
+          <small id="indicacionIntegrantes" class="form-text text-muted">
+              Escriba los correos de los integrantes registrados en la plataforma separados por comas. Ej. 
+              ayala.segoviano.donaldo@gmail.com, edoomm68@alumno.ipn.mx
+          </small>
+          <input
+            type="text"
+            class="form-control mt-1"
+            id="inputIntegrantes"
+            placeholder="Ingrese los correos de los integrantes"
+            name="integrantes"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputDirectores">Directores</label><br>
+          <small id="indicacionDirectores" class="form-text text-muted">
+              Escriba los correos de los directores registrados en la plataforma separados por comas. Ej. 
+              magusjor@gmail.com, sanchez.valvero@docente.ipn.mx, ...
+          </small>
+          <input
+            type="text"
+            class="form-control mt-1"
+            id="inputDirectores"
+            placeholder="Ingrese los correos de los directores"
+            name="directores"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+        </div>
+        <div class="form-group mt-4">
+            <label for="inputSinodales">Sinodales</label><br>
+            <small id="indicacionSinodales" class="form-text text-muted">
+                Escriba los correos de los sinodales registrados en la plataforma separados por comas. Ej. 
+                magusjor@gmail.com, sanchez.valvero@docente.ipn.mx, ...
+            </small>
+            <input
+              type="text"
+              class="form-control mt-1"
+              id="inputSinodales"
+              placeholder="Ingrese los correos de los sinodales"
+              name="sinodales"
+              required
+            />
+            <div class="invalid-feedback">
+              Campo necesario
+            </div>
+        </div>
+        <div class="form-group mt-4">
+          <label for="inputPalabrasClave">Palabras Clave</label><br>
+          <small id="indicacionPalabrasClave" class="form-text text-muted">
+              Escriba las palabras clave, separadas por comas. Ej. Biología, Inteligencia Artificial, 
+              Redes Neuronales, ...
+          </small>
+          <input
+            type="text"
+            class="form-control mt-1"
+            id="inputPalabrasClave"
+            placeholder="Ingrese las palabras clave"
+            name="palabrasClave"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+        </div>
+        <div class="form-group mt-4">
+          <% if (tesis !== null) { %>
+          <div class="text-center">
+            <a 
+            id="linkdoc"
+            type="button" 
+            target="_blank"
+            href=""
+            class="btn btn-outline-secondary">
+              Ver documento completo
+            </a>
+          </div>
+          <% } else { %>
+          <label for="Archivo">Archivo</label><br>
+          <input
+            type="file"
+            class="form-control mt-1"
+            id="inputArchivo"
+            name="archivo"
+            required
+          />
+          <div class="invalid-feedback">
+            Campo necesario
+          </div>
+          <% } %>
+        </div>
+        <div class="form-group mt-4">
+          <div class="row">
+            <div class="col-sm-auto">
+              <label for="selectStatus">Status</label>
+              <select class="form-select" aria-label="Default select example" id="selectStatus" name="status">
+                <option value="-1" selected>-</option>
+                <option value="1">Aceptado</option>
+                <option value="0">Rechazado</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="inputMensaje">Mensaje</label>
+              <input
+                type="text"
+                class="form-control"
+                id="inputMensaje"
+                placeholder="Ingrese el mensaje a enviar por correo a los involucrados de la tesis"
+                name="mensaje"
+              />
+            </div>
+          </div>
+        </div>
+        <div class="form-check mt-4">
+          <input class="form-check-input" type="checkbox" value="1" id="checkMessage" name="sendMessage">
+          <label class="form-check-label" for="checkMessage">
+            ¿Enviar mensaje a involucrados?
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary mt-4" id="btnSubmit">Guardar</button>
+
+        <!-- Input para saber que tipo de tesis se esta modificando -->
+        <input
+          type="text"
+          id="inputType"
+          name="type"
+          <% if (tesis === null) { %>
+          value="1"
+          <% } else if (!tesis.numero) { %>
+          value="2"
+          <% } else { %>
+          value="3"
+          <% } %>
+          hidden
+        >
+      </form>
+    </div>
+</div>
+
+<script>
+  var tesis = <%- JSON.stringify(tesis) %>;
+  var data = <%- JSON.stringify(data) %>;
+
+  $(document).ready(() => {
+      intializeButtons();
+      intializeForm();
+  });
+
+  function intializeButtons() {
+    intializeSaveButton();      
+    intializeDeleteButton();
+  }
+
+  function intializeSaveButton() {
+    if (tesis !== null && !tesis.numero) {
+      $("#btnSubmit").text("Guardar y notificar");
+    }
+  }
+
+  function intializeDeleteButton() {
+    $('#delete').confirm({
+        content: "<b>Atención</b>: ¿Esta seguro de querer eliminar?",
+        buttons: {
+          confirmar: function(){
+            location.href = this.$target.attr('href');
+          },
+          cerrar: function () {
+            this.close();
+          }
+        }
+    });
+  }
+
+  function intializeForm() {
+    if (data) {
+      colocarDatos(data);
+      if ("<%= success %>" == "El ID ya existe dentro de la base de datos, favor de ingresar otro") {
+        $("#inputNumero").val("");
+        $("#inputNumero").focus();
+      }
+    } else if (tesis !== null) {
+      colocarDatos(tesis);
+      $("#inputIntegrantes").val(tesis.integrantes.join(','));
+      $("#inputDirectores").val(tesis.directores.join(','));
+      $("#inputSinodales").val(tesis.sinodales.join(','));
+      $("#inputPalabrasClave").val(tesis.palabrasClave.join(','));
+    }
+    // checking
+    if ($("#inputType").val() == 2) {
+      $("#checkMessage").attr('disabled', true);
+      $("#checkMessage").prop('checked', true);
+    }
+  }
+
+  function colocarDatos(t) {
+    $("#inputNumero").val(t.numero);
+    $("#inputTitulo").val(t.titulo);
+    $("#inputEscuela").val(t.escuela);
+    $("#inputIntegrantes").val(t.integrantes);
+    $("#inputDirectores").val(t.directores);
+    $("#inputSinodales").val(t.sinodales);
+    $("#inputPalabrasClave").val(t.palabrasClave);
+    $("#linkdoc").attr('href', '/propuestas/' + t.ruta);
+    if (typeof t.status !== "undefined") {
+      $("#selectStatus").val(t.status);
+    } else {
+      console.log("no status");
+      $("#selectStatus").val('-1');
+    }
+    $("#selectStatus").change();
+    $("#inputMensaje").val(t.mensaje); // TODO: probablemente pueda haber error
+  }
+
+  $("#inputMensaje").on('input', () => {
+    if ($("#inputMensaje").val()) {
+      $("#checkMessage").prop('checked', true);
+    } else if ($("#inputType").val() != 2) {
+      $("#checkMessage").prop('checked', false);
+    }
+  });
+
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+          form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+          }, false)
+      })
+  })();
+</script>

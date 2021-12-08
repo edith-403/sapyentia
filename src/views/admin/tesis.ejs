@@ -1,0 +1,63 @@
+<%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario}) %>
+
+<br>
+<h2 class="display-4"><%= titulo %></h2>
+
+<div class="container py-4">
+    <table
+        id="tesis"
+        class="table table-striped table-bordered dt-responsive nowrap"
+        style="width: 100%"
+    >
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Alumnos</th>
+            <th>Fecha</th>
+            <th>Ver</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script>
+    var data = <%- JSON.stringify(tesis) %>;
+
+    $(document).ready(() => {
+        inicializarTabla();
+    });
+
+    function inicializarTabla() {
+        $("#tesis").DataTable({
+            data: data,
+            columns: [
+                {data: "titulo"},
+                {data: "integrantes"},
+                {data: "createdAt"},
+                {
+                    data: null,
+                    render: function (data, type, row, meta) {
+                        return retornarBotonInicializado(data._id);
+                    }
+                }
+            ]
+        });
+
+        function retornarBotonInicializado(id) {
+            btn = 
+            `
+            <a 
+            id="${id}" 
+            onclick="verSubmit(this.id)"
+            class="btn btn-sm btn-success">
+            <i class="fas fa-eye"></i>
+            </a>
+            `;
+            return btn;
+        }
+    }
+
+    function verSubmit(id) {
+        window.location.href = '/admin/'.concat(id);
+    }
+</script>
