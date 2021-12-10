@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 const listaTesisSchema = new Schema({
     idUsuario: String,
-    idTesis: [String],
+    idsTesis: [String],
 },{
     timestamps: true,
 });
