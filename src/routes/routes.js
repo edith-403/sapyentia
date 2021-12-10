@@ -5,6 +5,7 @@ const controladorRegistros = require("../controllers/controlador-registro-tesis"
 const controladorConsultasTesis = require("../controllers/controlador-peticion-tesis");
 const controladorConsultaHistorial = require("../controllers/controlador-peticion-historial");
 const controladorUsuarios = require("../controllers/controlador-usuarios");
+const controladorListas = require("../controllers/controlador-listas");
 const uuid = require("uuid");
 
 router.get("/", (req, res, next) => {
@@ -100,6 +101,11 @@ router.post("/propuestas", upload.single("archivo"), async (req, res, next) => {
 router.use((req, res, next) => {
   isAuthenticated(req, res, next);
 });
+
+router.post("/listas", async (req, res, next) => {
+    await controladorListas.registrarListaTesis(req.body);
+    res.sendStatus(200);
+  });
 
 router.get("/profile", async (req, res, next) => {
   const idUsuario = req.session.passport.user;
