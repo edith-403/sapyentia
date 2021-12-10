@@ -175,7 +175,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="avisoLabel">
-          <b>Guardada con éxito!</b>
+          <b id="mensajeAviso"></b>
         </h5>
         <button
           type="button"
@@ -184,8 +184,7 @@
           aria-label="Cerrar"
         ></button>
       </div>
-      <div class="modal-body">
-        Puedes encontrar la lista en tu página de perfil de inicio.
+      <div id="complementoAviso" class="modal-body">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
@@ -392,7 +391,7 @@
         Generar lista &nbsp <i class="far fa-list-alt"></i>
     </a>
     <% if (typeof user !== 'undefined') { %>
-        <a onclick="guardarLista()" data-bs-toggle="modal" data-bs-target="#aviso"
+        <a onclick="guardarLista()"
             class="btn btn-sm btn-success">
             Guardar lista &nbsp <i class="fas fa-save"></i>
         </a>
@@ -412,10 +411,34 @@
   const guardarLista = () => {
     const table = $('#lista').DataTable();
     let data = table.rows().data();
-
     
+    const idUsuario = '<%= user?._id%>';
+    let tesisIds = []
+    for (let i = 0; i < data.length; i++) {
+        tesisIds.push(data[i]._id)
+    }
+    const listaDeUsuario = {idsTesis: tesisIds, idUsuario: idUsuario};
+    if (tesisIds.length > 0) {
+        fetch("/listas", {
+            method: "POST", // or 'PUT'
+            body: JSON.stringify(listaDeUsuario), // data can be `string` or {object}!
+            headers: {
+                "Content-Type": "application/json",
+            },
+            }).catch((error) => {
+                document.getElementById("mensajeAviso").innerText = "La tesis no pudo ser guardada.";
+                document.getElementById("complementoAviso").innerText = "Intenta guardar la tesis de nuevo. Si el error persiste, recarga la página e inténtalo de nuevo.";
+            })
+            .then((response) => {
+                document.getElementById("mensajeAviso").innerText = "Lista guardada con éxito!";
+                document.getElementById("complementoAviso").innerText = "Puedes encontrar las listas guardaras en la pantalla de inicio de tu perfil.";
+        });
+    } else {
+        document.getElementById("mensajeAviso").innerText = "Por favor, añade al menos una tesis a la lista.";
+        document.getElementById("complementoAviso").innerText = "Debes seleccionar al menos una tesis para poder guardarla en tus listas.";
+    }
+    $('#aviso').modal('toggle');
 
-    document.getElementById('referenciasTextArea').value = textoReferencias;
   }
 
   const generarLista = () => {
