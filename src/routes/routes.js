@@ -34,7 +34,8 @@ router.get("/tesis", async (req, res, next) => {
 });
 
 router.get("/view/tesis", async (req, res, next) => {
-  res.render("consultas_tesis");
+  const idUsuario = req.session.passport?.user;
+  res.render("consultas_tesis", {idUsuario: idUsuario});
 });
 
 router.get("/signup", (req, res, next) => {

@@ -364,7 +364,6 @@
     </div>
   </div>
 </div>
-
 <div class="card mt-4 mb-5">
   <div class="card-header">
     <h5 class="card-title"><b>Lista de tesis.</b></h5>
@@ -392,10 +391,12 @@
         class="btn btn-sm btn-success">
         Generar lista &nbsp <i class="far fa-list-alt"></i>
     </a>
-    <a onclick="guardarLista()" data-bs-toggle="modal" data-bs-target="#aviso"
-        class="btn btn-sm btn-success">
-        Guardar lista &nbsp <i class="fas fa-save"></i>
-    </a>
+    <% if (typeof user !== 'undefined') { %>
+        <a onclick="guardarLista()" data-bs-toggle="modal" data-bs-target="#aviso"
+            class="btn btn-sm btn-success">
+            Guardar lista &nbsp <i class="fas fa-save"></i>
+        </a>
+    <% } %>
   </div>
 </div>
 </div>
