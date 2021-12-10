@@ -157,7 +157,39 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="aviso"
+  tabindex="-1"
+  aria-labelledby="avisoLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="avisoLabel">
+          <b>Guardada con éxito!</b>
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Cerrar"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Puedes encontrar la lista en tu página de perfil de inicio.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          Aceptar
         </button>
       </div>
     </div>
@@ -360,6 +392,10 @@
         class="btn btn-sm btn-success">
         Generar lista &nbsp <i class="far fa-list-alt"></i>
     </a>
+    <a onclick="guardarLista()" data-bs-toggle="modal" data-bs-target="#aviso"
+        class="btn btn-sm btn-success">
+        Guardar lista &nbsp <i class="fas fa-save"></i>
+    </a>
   </div>
 </div>
 </div>
@@ -371,6 +407,15 @@
 
   // Guardara los valores no repetidos de las tesis agregadas a la lista
   let elementosLista = new Set()
+
+  const guardarLista = () => {
+    const table = $('#lista').DataTable();
+    let data = table.rows().data();
+
+    
+
+    document.getElementById('referenciasTextArea').value = textoReferencias;
+  }
 
   const generarLista = () => {
     const table = $('#lista').DataTable();
