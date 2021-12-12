@@ -134,4 +134,12 @@ const obtenerTesisId = async (id) => {
     }
 }
 
-module.exports = {procesarSolicitudTesis, obtenerTesis, obtenerTesisId, obtenerInformacionTesis};
+const obtenerNumeroTesis = async () => {
+    var result = await Tesis.find();
+    var numeroPropuestas = result.filter(tesis => tesis.numero.length == 0).length;
+    var numeroTesis = result.length - numeroPropuestas;
+
+    return {numeroPropuestas: numeroPropuestas, numeroTesis: numeroTesis};
+}
+
+module.exports = {procesarSolicitudTesis, obtenerTesis, obtenerTesisId, obtenerInformacionTesis, obtenerNumeroTesis};

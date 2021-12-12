@@ -6,10 +6,10 @@
             <h1 class="display-1">BIENVENIDO</h1>
             <i>
                 <p class="lead">
-                    a la página de inicio de administrador Nombre
+                    a la página de inicio de administrador <%= nombre %>
                 </p>
             </i>
-            <h6>correo@dominio.com</h6>
+            <h6><%= email %></h6>
         </div>
     </div>
 </div>
@@ -26,6 +26,10 @@
             <tr>
                 <th># Propuestas</th>
                 <th># Tésis</th>
+            </tr>
+            <tr>
+                <td><%= numeroPropuestas %></td>
+                <td><%= numeroTesis %></td>
             </tr>
             </thead>
         </table>
@@ -61,28 +65,4 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div> -->
 </div>
