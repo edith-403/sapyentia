@@ -1,21 +1,27 @@
 <%- layout('layouts/main.ejs', {tipoUsuario: tipoUsuario}) %>
 
+<style>
+    .gray-text{
+        color: #636363;
+    }
+</style>
+
 <div class="row" style="margin-top: 2%;">
     <div class="card bg-c-blue order-card">
         <div class="card-block">
             <h1 class="display-1">BIENVENIDO</h1>
             <i>
                 <p class="lead">
-                    a la página de inicio de administrador Nombre
+                    a la página de inicio de administrador <%= nombre %>
                 </p>
             </i>
-            <h6>correo@dominio.com</h6>
+            <h6><%= email %></h6>
         </div>
     </div>
 </div>
 
-<div class="row">
-    <h1 class="display-6"><i class="bi bi-info-circle-fill" style="color: #449cfc;"></i> Rápida información</h1>
+<div class="row" style="padding-top: 3%;">
+    <h1 class="display-6 gray-text"><i class="bi bi-info-circle-fill" style="color: #449cfc;"></i> Rápida información</h1>
     <div class="container py-4">
         <table
             id="tesis"
@@ -27,33 +33,37 @@
                 <th># Propuestas</th>
                 <th># Tésis</th>
             </tr>
+            <tr>
+                <td><%= numeroPropuestas %></td>
+                <td><%= numeroTesis %></td>
+            </tr>
             </thead>
         </table>
     </div>
 </div>
 
-<div class="row">
-    <h1 class="display-6"><i class="bi bi-lightning-charge-fill" style="color: #449cfc;"></i> Rápido acceso</h1>
+<div class="row" style="padding-top: 2%;">
+    <h1 class="display-6 gray-text"><i class="bi bi-lightning-charge-fill" style="color: #449cfc;"></i> Rápido acceso</h1>
 </div>
 <div class="row">
     <div class="card-deck-wrapper">
         <div class="card-deck">
             <div class="card bg-info p-2">
-                <a class="card-block stretched-link text-decoration-none text-white text-center" href>
+                <a class="card-block stretched-link text-decoration-none text-white text-center" href="admin/propuestas">
                     <h1><i class="bi bi-journal"></i></h1>
                     <h4 class="card-title ">Propuestas</h4>
                     <p class="card-text">Revise y edite las propuestas de tesis enviadas por los estudiantes</p>
                 </a>
             </div>
             <div class="card bg-info p-2">
-                <a class="card-block stretched-link text-decoration-none text-white text-center" href="/">
+                <a class="card-block stretched-link text-decoration-none text-white text-center" href="admin/tesis">
                     <h1><i class="bi bi-journal-check"></i></h1>
                     <h4 class="card-title">Propuestas y tesis</h4>
                     <p class="card-text">Revise y edite propuestas y tesis enviadas</p>
                 </a>
             </div>
             <div class="card bg-info p-2">
-                <a class="card-block stretched-link text-decoration-none text-white text-center" href>
+                <a class="card-block stretched-link text-decoration-none text-white text-center" href="admin/crear_tesis">
                     <h1><i class="bi bi-journal-arrow-up"></i></h1>
                     <h4 class="card-title">Nueva</h4>
                     <p class="card-text">Cree una nueva propuesta o tesis</p>
@@ -61,28 +71,4 @@
             </div>
         </div>
     </div>
-    <!-- <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card p-2 bg-c-blue order-card">
-            <a class="card-block stretched-link text-decoration-none" href>
-                <h4 class="card-title">Card title</h4>
-                ...
-            </a>
-        </div>
-    </div> -->
 </div>

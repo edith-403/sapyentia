@@ -119,7 +119,7 @@ router.get('/:id', async (req, res) => {
     if (tesis) {
         res.render('./admin/formulario_tesis', {tipoUsuario: usuario.type, tesis: tesis, success: "", status: "", data: null});
     } else {
-        res.redirect('/tests'); // TODO
+        res.redirect('/admin');
     }
 });
 
@@ -199,7 +199,20 @@ router.get('/:id/delete', async (req, res) => {
             data: null
         });   
     } else {
-        res.redirect('/admin/propuestas'); // TODO
+        res.redirect('/admin');
+    }
+});
+
+router.get('/', async (req, res) => {
+    const idUsuario = req.session.passport.user;
+    const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
+    
+    if (usuario.type === "administrador") {
+        const info = await controladorConsultasTesis.obtenerNumeroTesis();
+
+        res.render('./admin/admin', {tipoUsuario: usuario.type, nombre: usuario.nombre, email: usuario.email, numeroPropuestas: info.numeroPropuestas, numeroTesis: info.numeroTesis});
+    } else {
+        res.send('Error');
     }
 });
 
