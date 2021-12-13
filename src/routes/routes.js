@@ -36,7 +36,7 @@ router.get("/tesis", async (req, res, next) => {
 
 router.get("/view/tesis", async (req, res, next) => {
   const idUsuario = req.session.passport?.user;
-  res.render("consultas_tesis", {idUsuario: idUsuario});
+  res.render("consultas_tesis", { idUsuario: idUsuario });
 });
 
 router.get("/signup", (req, res, next) => {
@@ -103,14 +103,20 @@ router.use((req, res, next) => {
 });
 
 router.post("/listas", async (req, res, next) => {
-    await controladorListas.registrarListaTesis(req.body);
-    res.sendStatus(200);
-  });
+  await controladorListas.registrarListaTesis(req.body);
+  res.sendStatus(200);
+});
 
 router.get("/profile", async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
   res.render("profile", { tipoUsuario: usuario.type });
+});
+
+router.get("/student", async (req, res, next) => {
+  const idUsuario = req.session.passport.user;
+  const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
+  res.render("student", { tipoUsuario: usuario.type });
 });
 
 router.get("/docente/historial/:id", async (req, res, next) => {

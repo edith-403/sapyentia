@@ -104,6 +104,9 @@
                     </li>
                 <% } %>
                 <% if (typeof tipoUsuario !== 'undefined' && tipoUsuario === 'estudiante') { %>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/student">Inicio</a> <!-- TODO: El href se puede cambiar de forma dinimica mediante js -->
+                    </li>
                     <li class="nav-item"> 
                         <a class="nav-link" href="/propuestas">Envio de propuestas de tesis</a>
                     </li>
