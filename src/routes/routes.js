@@ -112,7 +112,6 @@ router.get("/profile", async (req, res, next) => {
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
   const nombreUsuario = usuario.nombre;
   listasGuardadasUsuario = await controladorListas.obtenerListasDeUsuario(idUsuario);
-  console.log(listasGuardadasUsuario)
   res.render("profile", { tipoUsuario: usuario.type, nombreUsuario: nombreUsuario, listasUsuario: listasGuardadasUsuario });
 });
 

@@ -1,26 +1,132 @@
 <%- layout('layouts/main', {tipoUsuario: tipoUsuario}) %>
 
-<style>
-    .gray-text{
-        color: #636363;
-    }
-</style>
+    <style>
+        .gray-text {
+            color: #636363;
+        }
+    </style>
 
-<div class="row" style="margin-top: 2%;">
-    <div class="card bg-c-blue order-card">
-        <div class="card-block">
-            <h1 class="mt-4">Perfil </h1>
-            <i>
-                <p class="mt-4">
-                    ID: <%= user._id%>
-                </p>
-                <p class="mt-4">
-                    <%= tipoUsuario %>
-                </p>
-                <p class="mt-4">
-                    <%= user.email %>
-                </p>
-            </i>
+    <div class="modal fade" id="referencias" tabindex="-1" aria-labelledby="referenciasLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="referenciasLabel">
+                        <b>Información de la tesis</b>
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="#">
+                        <textarea class="form-control" id="referenciasTextArea" rows="10" disabled></textarea>
+                    </form>
+                    <button type="button" class="btn btn-secondary mt-4" onclick="copyToClipboard()">
+                        Copiar texto al portapapeles <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Cerrar
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="modal fade" id="lista" tabindex="-1" aria-labelledby="lista" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="listaLabel">
+                        Lista de tesis
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container py-4">
+                        <table id="lista" class="table table-striped table-bordered dt-responsive nowrap"
+                            style="width: 100%">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th>Título</th>
+                                    <th>Ver</th>
+                                    <th>Fecha</th>
+                                    <th>Palabras Clave</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div class="d-flex justify-content-center">
+                    <a onclick="generarLista()" data-bs-toggle="modal" data-bs-target="#referencias"
+                        class="btn btn-sm btn-success">
+                        Generar lista &nbsp <i class="far fa-list-alt"></i>
+                    </a>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 2%;">
+        <div class="card order-card">
+            <div class="card-block">
+                <h1 class="mt-4 text-primary">Bienvenido <%= user.nombre%>! </h1>
+            </div>
+            <div class="card-block">
+                <h3 class="mt-4 text-primary">Tus listas guardadas</h3>
+                <div class="container py-4">
+                    <table id="listas" class="table table-striped table-bordered dt-responsive nowrap"
+                        style="width: 100%">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Ver</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var data = <%- JSON.stringify(listasUsuario) %>;
+        console.log(data)
+        $(document).ready(function () {
+            var table = $("#listas").DataTable({
+                responsive: true,
+                "language": {
+                    "emptyTable": "Sin resultados"
+                },
+                scrollX: true,
+                data: data,
+                columns: [
+                    {
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            return `Guardada el ${data.createdAt.slice(0, 10)}`;
+                        },
+                    },
+                    {
+                        data: null,
+                        render: function (data, type, row, meta) {
+                            return `
+                            <a 
+                            id="${data._id}" 
+                            onclick="mostrarInformacion(this.id)" 
+                            data-bs-toggle="modal" 
+                            data-bs-target="#lista" 
+                            class="btn btn-sm btn-success">
+                            <i class="fas fa-eye"></i>
+                            </a>`;
+                        },
+                    },
+                ],
+            });
+        });
+
+
+    </script>
