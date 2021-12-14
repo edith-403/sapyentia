@@ -41,7 +41,7 @@ const obtenerInformacionTesis = async (informacion) => {
     return tesisTerminadas;
 }
 
-const procesarSolicitudTesis = async (filtros) => {
+const procesarSolicitudTesis = async (filtros, email = undefined) => {
     // Creando expresiones regulares para los integrantes
     const nombresIntegrantes = filtros.integrantes.split(',').map((item) => item.trim());
     
@@ -63,7 +63,10 @@ const procesarSolicitudTesis = async (filtros) => {
 
     // Creando expresiones regulares para los sinodales
     const nombresSinodales = filtros.sinodales.split(',').map((item) => item.trim());
-    const correosSinodales = (await Promise.all(nombresSinodales.flatMap(async (nombre) => {
+    const correosSinodales = 
+    typeof email !== 'undefined' ? 
+    [email] :
+    (await Promise.all(nombresSinodales.flatMap(async (nombre) => {
         if (nombre.length == 0) 
             return "";
         const usuarios = await controladorUsuarios.obtenerUsuarioPorNombre(nombre);
@@ -80,7 +83,10 @@ const procesarSolicitudTesis = async (filtros) => {
 
     // Creando expresiones regulares para los directores
     const nombresDirectores = filtros.directores.split(',').map((item) => item.trim());
-    const correosDirectores = (await Promise.all(nombresDirectores.flatMap(async (nombre) => {
+    const correosDirectores = 
+    typeof email !== 'undefined' ? 
+    [email] :
+    (await Promise.all(nombresDirectores.flatMap(async (nombre) => {
         if (nombre.length == 0) 
             return "";
         const usuarios = await controladorUsuarios.obtenerUsuarioPorNombre(nombre);

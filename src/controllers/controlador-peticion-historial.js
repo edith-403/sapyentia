@@ -4,7 +4,7 @@ const asignarValoresDefecto = require('../helpers/asignar_valores_defecto');
 
 const buscarTesisProfesor = async (informacion) => {
     filtros = asignarValoresDefecto.asignarValoresPorDefecto(informacion);
-    const result = await controladorConsultasTesis.procesarSolicitudTesis(filtros);
+    const result = await controladorConsultasTesis.procesarSolicitudTesis(filtros, informacion.directores);
     // Buscar solo tesis con número asignado
     let tesisTerminadas = result.filter(tesis => tesis.numero.length > 0);
     const correoProfesor = informacion.directores;
