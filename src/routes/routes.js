@@ -110,7 +110,9 @@ router.post("/listas", async (req, res, next) => {
 router.get("/profile", async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
-  res.render("profile", { tipoUsuario: usuario.type });
+  const nombreUsuario = usuario.nombre;
+  listasGuardadasUsuario = controladorListas.obtenerListasDeUsuario(idUsuario);
+  res.render("profile", { tipoUsuario: usuario.type, nombreUsuario: nombreUsuario, listasUsuario: listasGuardadasUsuario });
 });
 
 router.get("/student", async (req, res, next) => {
