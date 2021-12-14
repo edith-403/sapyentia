@@ -87,7 +87,7 @@
                     <a class="nav-link active" aria-current="page" href="/view/tesis">Buscar tesis</a>
                 </li>
                 <% if (typeof user !== 'undefined') { %>
-                    <% if (tipoUsuario === 'administrador') { %>
+                    <% if (typeof tipoUsuario !== 'undefined' && tipoUsuario === 'administrador') { %>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="/admin">Inicio</a> <!-- TODO: El href se puede cambiar de forma dinimica mediante js -->
                     </li>

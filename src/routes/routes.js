@@ -111,7 +111,8 @@ router.get("/profile", async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
   const nombreUsuario = usuario.nombre;
-  listasGuardadasUsuario = controladorListas.obtenerListasDeUsuario(idUsuario);
+  listasGuardadasUsuario = await controladorListas.obtenerListasDeUsuario(idUsuario);
+  console.log(listasGuardadasUsuario)
   res.render("profile", { tipoUsuario: usuario.type, nombreUsuario: nombreUsuario, listasUsuario: listasGuardadasUsuario });
 });
 

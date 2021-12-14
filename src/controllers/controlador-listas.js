@@ -1,4 +1,5 @@
 const ListaTesis = require('../models/listaTesis');
+const ObjectId = require('mongodb').ObjectId;
 
 const registrarListaTesis = async (metadata)  =>
 {
@@ -12,10 +13,10 @@ const registrarListaTesis = async (metadata)  =>
 const obtenerListasDeUsuario = async (idUsuario) => {
     const listasGuardadas = await ListaTesis.find(
         {
-            "_id": new ObjectId(idUsuario)
+            "idUsuario": idUsuario
         }
     );
-    const jsonListasUsuario = JSON.parse(JSON.stringify(usuario));
+    const jsonListasUsuario = JSON.parse(JSON.stringify(listasGuardadas));
     return jsonListasUsuario;
 }
 
