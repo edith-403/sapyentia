@@ -115,6 +115,11 @@ router.get("/profile", async (req, res, next) => {
   res.render("profile", { tipoUsuario: usuario.type, nombreUsuario: nombreUsuario, listasUsuario: listasGuardadasUsuario });
 });
 
+router.get("/listas/:id", async (req, res, next) => {
+  const result = await controladorListas.obtenerListaPorId(req.params.id);
+  res.send(result);
+});
+
 router.get("/student", async (req, res, next) => {
   const idUsuario = req.session.passport.user;
   const usuario = await controladorUsuarios.obtenerUsuario(idUsuario);
