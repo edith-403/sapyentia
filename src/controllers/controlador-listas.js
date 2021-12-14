@@ -9,4 +9,14 @@ const registrarListaTesis = async (metadata)  =>
     await nuevaLista.save();
 }
 
-module.exports = {registrarListaTesis};
+const obtenerListasDeUsuario = async (idUsuario) => {
+    const listasGuardadas = await ListaTesis.find(
+        {
+            "_id": new ObjectId(idUsuario)
+        }
+    );
+    const jsonListasUsuario = JSON.parse(JSON.stringify(usuario));
+    return jsonListasUsuario;
+}
+
+module.exports = {registrarListaTesis, obtenerListasDeUsuario};
