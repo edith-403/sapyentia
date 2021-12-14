@@ -20,4 +20,14 @@ const obtenerListasDeUsuario = async (idUsuario) => {
     return jsonListasUsuario;
 }
 
-module.exports = {registrarListaTesis, obtenerListasDeUsuario};
+const obtenerListaPorId = async (idLista) => {
+    const lista = await ListaTesis.findOne(
+        {
+            "_id": ObjectId(idLista)
+        }
+    );
+
+    return lista;
+}
+
+module.exports = {registrarListaTesis, obtenerListasDeUsuario, obtenerListaPorId};
