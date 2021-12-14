@@ -415,7 +415,7 @@
     const idUsuario = '<%= user?._id%>';
     let tesisIds = []
     for (let i = 0; i < data.length; i++) {
-        tesisIds.push(data[i]._id)
+        tesisIds.push(data[i].numero)
     }
     const listaDeUsuario = {idsTesis: tesisIds, idUsuario: idUsuario};
     if (tesisIds.length > 0) {
